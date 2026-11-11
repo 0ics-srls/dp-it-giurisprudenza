@@ -1,0 +1,1 @@
+SELECT count(*) = 7 AS ok FROM information_schema.tables WHERE table_schema = current_schema() AND table_type = 'BASE TABLE' AND table_name IN ('pronunce', 'massime', 'norme_impugnate', 'passages', 'cassazione_sentenze', 'cgt_sentenze', 'cgt_skipped')
