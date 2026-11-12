@@ -1,0 +1,222 @@
+<section class="corpus">
+  <h1 data-testid="screen-title">{{ 'corpus.title' | transloco }}</h1>
+
+  <div class="tabs" role="tablist" [attr.aria-label]="'corpus.tablist' | transloco">
+    @for (name of tabs; track name) {
+      <button
+        type="button"
+        role="tab"
+        class="tab"
+        [attr.data-testid]="'tab-' + name"
+        [attr.aria-selected]="tab() === name"
+        [class.active]="tab() === name"
+        (click)="select(name)"
+      >
+        {{ 'corpus.tabs.' + name | transloco }}
+      </button>
+    }
+  </div>
+
+  @switch (tab()) {
+    @case ('cc') {
+      <div class="panel" role="tabpanel">
+        <div class="filters">
+          <label for="gc-cc-search">{{ 'cc.search' | transloco }}</label>
+          <input id="gc-cc-search" type="search" data-testid="cc-search" [placeholder]="'cc.searchPlaceholder' | transloco" (input)="cc.search(value($event))" />
+          <label for="gc-cc-tipologia">{{ 'cc.tipologia' | transloco }}</label>
+          <select id="gc-cc-tipologia" data-testid="cc-tipologia" (change)="cc.tipologia(value($event))">
+            <option value="">{{ 'common.any' | transloco }}</option>
+            <option value="S">{{ 'cc.kindS' | transloco }}</option>
+            <option value="O">{{ 'cc.kindO' | transloco }}</option>
+          </select>
+          <label for="gc-cc-from">{{ 'common.annoFrom' | transloco }}</label>
+          <input id="gc-cc-from" type="number" data-testid="cc-anno-from" (input)="cc.annoFrom(value($event))" />
+          <label for="gc-cc-to">{{ 'common.annoTo' | transloco }}</label>
+          <input id="gc-cc-to" type="number" data-testid="cc-anno-to" (input)="cc.annoTo(value($event))" />
+        </div>
+
+        @if (cc.mode() === 'range') {
+          <p class="hint" data-testid="cc-range-hint">{{ 'cc.rangeHint' | transloco }}</p>
+        }
+
+        @if (cc.error(); as key) {
+          <p class="error" role="alert" data-testid="cc-error">{{ key | transloco }} <span class="detail">{{ cc.errorDetail() }}</span></p>
+        } @else if (cc.loading() && cc.rows().length === 0) {
+          <p data-testid="cc-loading">{{ 'common.loading' | transloco }}</p>
+        } @else if (cc.rows().length === 0) {
+          <p class="empty" data-testid="cc-empty">{{ 'cc.empty' | transloco }}</p>
+        } @else {
+          <ul class="results">
+            @for (item of cc.rows(); track item.key) {
+              <li class="result" data-testid="cc-row">
+                <div class="line">
+                  <button type="button" class="link" data-testid="cc-open" (click)="cc.open(item)">{{ item.ecli }}</button>
+                  <span class="meta">{{ item.tipologia === 'S' ? ('cc.kindS' | transloco) : ('cc.kindO' | transloco) }}</span>
+                  <span class="meta">{{ item.dataDeposito | date: 'yyyy-MM-dd' : 'UTC' }}</span>
+                  @if (item.source !== null) {
+                    <span class="badge" data-testid="cc-source-badge">{{ 'cc.source.' + item.source | transloco }}</span>
+                    @if (item.massimaNumero !== null) {
+                      <span class="meta">{{ 'cc.massimaNo' | transloco: { n: item.massimaNumero } }}</span>
+                    }
+                  }
+                  @if (item.massimeCount !== null) {
+                    <span class="meta">{{ 'cc.columns.massime' | transloco }}: {{ item.massimeCount }}</span>
+                  }
+                  @if (item.relatore) {
+                    <span class="meta">{{ 'cc.columns.relatore' | transloco }}: {{ item.relatore }}</span>
+                  }
+                </div>
+                @if (item.titolo) {
+                  <div class="titolo">{{ item.titolo }}</div>
+                }
+                @if (item.headline.length > 0) {
+                  <p class="excerpt" data-testid="cc-headline">
+                    @for (part of item.headline; track $index) {
+                      @if (part.mark) {
+                        <mark>{{ part.text }}</mark>
+                      } @else {
+                        <span>{{ part.text }}</span>
+                      }
+                    }
+                  </p>
+                } @else if (item.snippet) {
+                  <p class="excerpt" data-testid="cc-snippet">{{ item.snippet }}</p>
+                }
+              </li>
+            }
+          </ul>
+        }
+
+        @if (cc.paged()) {
+          <nav class="pager" [attr.aria-label]="'common.pager' | transloco">
+            <button type="button" data-testid="cc-prev" [disabled]="!cc.hasPrevious()" (click)="cc.previous()">{{ 'common.previous' | transloco }}</button>
+            <span data-testid="cc-range">{{ 'common.range' | transloco: { from: cc.from(), to: cc.to(), total: cc.count() } }}</span>
+            <button type="button" data-testid="cc-next" [disabled]="!cc.hasNext()" (click)="cc.next()">{{ 'common.next' | transloco }}</button>
+          </nav>
+        }
+      </div>
+    }
+
+    @case ('cass') {
+      <div class="panel" role="tabpanel">
+        <p class="notice" data-testid="cass-notice">{{ 'cass.notice' | transloco }}</p>
+        <div class="filters">
+          <label for="gc-cass-search">{{ 'cass.search' | transloco }}</label>
+          <input id="gc-cass-search" type="search" data-testid="cass-search" [placeholder]="'cass.searchPlaceholder' | transloco" (input)="cass.search(value($event))" />
+          <label for="gc-cass-kind">{{ 'cass.kind' | transloco }}</label>
+          <select id="gc-cass-kind" data-testid="cass-kind" (change)="cass.kind(value($event))">
+            <option value="">{{ 'common.any' | transloco }}</option>
+            <option value="snciv">{{ 'cass.kindCiv' | transloco }}</option>
+            <option value="snpen">{{ 'cass.kindPen' | transloco }}</option>
+          </select>
+          <label for="gc-cass-from">{{ 'common.annoFrom' | transloco }}</label>
+          <input id="gc-cass-from" type="number" data-testid="cass-anno-from" (input)="cass.annoFrom(value($event))" />
+          <label for="gc-cass-to">{{ 'common.annoTo' | transloco }}</label>
+          <input id="gc-cass-to" type="number" data-testid="cass-anno-to" (input)="cass.annoTo(value($event))" />
+          <label for="gc-cass-sezione">{{ 'cass.sezione' | transloco }}</label>
+          <input id="gc-cass-sezione" type="text" data-testid="cass-sezione" (input)="cass.sezione(value($event))" />
+          <label for="gc-cass-materia">{{ 'cass.materia' | transloco }}</label>
+          <input id="gc-cass-materia" type="text" data-testid="cass-materia" (input)="cass.materia(value($event))" />
+        </div>
+
+        @if (cass.error(); as key) {
+          <p class="error" role="alert" data-testid="cass-error">{{ key | transloco }} <span class="detail">{{ cass.errorDetail() }}</span></p>
+        } @else if (cass.loading() && cass.rows().length === 0) {
+          <p data-testid="cass-loading">{{ 'common.loading' | transloco }}</p>
+        } @else if (cass.rows().length === 0) {
+          <p class="empty" data-testid="cass-empty">{{ 'cass.empty' | transloco }}</p>
+        } @else {
+          <ul class="results">
+            @for (item of cass.rows(); track item.hit.sourceId) {
+              <li class="result" data-testid="cass-row">
+                <div class="line">
+                  <button type="button" class="link" data-testid="cass-open" (click)="cass.open(item)">{{ item.hit.ecli ?? item.hit.sourceId }}</button>
+                  <span class="meta">{{ 'cass.columns.sezione' | transloco }} {{ item.hit.sezione }}</span>
+                  <span class="meta">{{ 'cass.columns.anno' | transloco }} {{ item.hit.anno }}</span>
+                  <span class="meta">{{ 'cass.columns.numDec' | transloco }} {{ item.hit.numDec }}</span>
+                  <span class="meta">{{ item.hit.dataDecisione | date: 'yyyy-MM-dd' : 'UTC' }}</span>
+                  @if (item.hit.materia) {
+                    <span class="meta">{{ item.hit.materia }}</span>
+                  }
+                </div>
+                <p class="excerpt" data-testid="cass-snippet">
+                  @for (part of item.snippet; track $index) {
+                    @if (part.mark) {
+                      <mark>{{ part.text }}</mark>
+                    } @else {
+                      <span>{{ part.text }}</span>
+                    }
+                  }
+                </p>
+                @if (item.link !== '') {
+                  <a class="source" data-testid="cass-source-link" [href]="item.link" target="_blank" rel="noopener noreferrer">{{ 'common.openSource' | transloco }}</a>
+                }
+              </li>
+            }
+          </ul>
+        }
+      </div>
+    }
+
+    @case ('cgt') {
+      <div class="panel" role="tabpanel">
+        <p class="notice" data-testid="cgt-notice">{{ 'cgt.notice' | transloco }}</p>
+        <div class="filters">
+          <label for="gc-cgt-search">{{ 'cgt.search' | transloco }}</label>
+          <input id="gc-cgt-search" type="search" data-testid="cgt-search" [placeholder]="'cgt.searchPlaceholder' | transloco" (input)="cgt.search(value($event))" />
+          <label for="gc-cgt-grado">{{ 'cgt.grado' | transloco }}</label>
+          <select id="gc-cgt-grado" data-testid="cgt-grado" (change)="cgt.grado(value($event))">
+            <option value="">{{ 'common.any' | transloco }}</option>
+            <option value="1">{{ 'cgt.grado1' | transloco }}</option>
+            <option value="2">{{ 'cgt.grado2' | transloco }}</option>
+          </select>
+          <label for="gc-cgt-luogo">{{ 'cgt.luogo' | transloco }}</label>
+          <input id="gc-cgt-luogo" type="text" data-testid="cgt-luogo" (input)="cgt.luogo(value($event))" />
+          <label for="gc-cgt-from">{{ 'common.annoFrom' | transloco }}</label>
+          <input id="gc-cgt-from" type="number" data-testid="cgt-anno-from" (input)="cgt.annoFrom(value($event))" />
+          <label for="gc-cgt-to">{{ 'common.annoTo' | transloco }}</label>
+          <input id="gc-cgt-to" type="number" data-testid="cgt-anno-to" (input)="cgt.annoTo(value($event))" />
+        </div>
+
+        @if (cgt.error(); as key) {
+          <p class="error" role="alert" data-testid="cgt-error">{{ key | transloco }} <span class="detail">{{ cgt.errorDetail() }}</span></p>
+        } @else if (cgt.loading() && cgt.rows().length === 0) {
+          <p data-testid="cgt-loading">{{ 'common.loading' | transloco }}</p>
+        } @else if (cgt.rows().length === 0) {
+          <p class="empty" data-testid="cgt-empty">{{ 'cgt.empty' | transloco }}</p>
+        } @else {
+          <ul class="results">
+            @for (item of cgt.rows(); track item.hit.id) {
+              <li class="result" data-testid="cgt-row">
+                <div class="line">
+                  <button type="button" class="link" data-testid="cgt-open" (click)="cgt.open(item)">{{ item.hit.estremi ?? item.hit.id }}</button>
+                </div>
+                <div class="line">
+                  @if (item.hit.grado !== null) {
+                    <span class="meta">{{ 'cgt.columns.grado' | transloco }} {{ item.hit.grado }}</span>
+                  }
+                  @if (item.hit.luogo) {
+                    <span class="meta">{{ item.hit.luogo }}</span>
+                  }
+                  <span class="meta">{{ item.hit.data | date: 'yyyy-MM-dd' : 'UTC' }}</span>
+                </div>
+                <p class="excerpt" data-testid="cgt-snippet">
+                  @for (part of item.snippet; track $index) {
+                    @if (part.mark) {
+                      <mark>{{ part.text }}</mark>
+                    } @else {
+                      <span>{{ part.text }}</span>
+                    }
+                  }
+                </p>
+                @if (item.link !== '') {
+                  <a class="source" data-testid="cgt-source-link" [href]="item.link" target="_blank" rel="noopener noreferrer">{{ 'common.openSource' | transloco }}</a>
+                }
+              </li>
+            }
+          </ul>
+        }
+      </div>
+    }
+  }
+</section>

@@ -1,0 +1,10 @@
+{
+  "tool": "sentenze_su_norma",
+  "params": {
+    "norma_urn": "urn:nir:stato:legge:2022-12-29;197~art1"
+  },
+  "expect": {
+    "minRows": 0,
+    "maxRows": 500
+  }
+}

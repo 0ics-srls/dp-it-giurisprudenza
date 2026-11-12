@@ -1,0 +1,435 @@
+apiVersion: v3.2.0
+kind: DataContract
+id: urn:dataplatform:ds_it_giurisprudenza
+name: Italian case law (Corte costituzionale, Corte di cassazione, Corti di giustizia tributaria)
+version: 0.1.0
+status: active
+domain: legal
+description:
+  purpose: Decisions of the Corte costituzionale (pronunce, massime, norme impugnate), sentences of the Corte di cassazione and of the Corti di giustizia tributaria, with full-text indexes and embeddable passages.
+  usage: Read through the Tools of the it-giurisprudenza package.
+  limitations: Cassazione full text exists from 2021, tax justice decisions from the 2022 reform; Cassazione and CGT text is anonymized, never served verbatim (extremes, snippet and source link only); the norme impugnate registries are snapshots of pending cases.
+team:
+  name: 0ics data platform
+  members:
+    - username: operator
+      role: owner
+slaProperties:
+  - property: freshness
+    value: 30
+    unit: d
+    description: The Court dumps are updated in place; a monthly re-check is enough.
+customProperties:
+  - property: license
+    value: mixed-per-source-see-manifest
+schema:
+  - name: pronunce
+    physicalName: pronunce
+    description: Decisions of the Corte costituzionale (open data, CC BY-SA 3.0, attribution required).
+    customProperties:
+      - property: search
+        value: fts
+      - property: ftsField
+        value: search_vector
+    properties:
+      - name: ecli
+        logicalType: string
+        physicalType: text
+        primaryKey: true
+        description: ECLI assigned by the Court (ECLI:IT:COST:year:number)
+        customProperties:
+          - property: identifierScheme
+            value: ecli
+      - name: anno
+        logicalType: integer
+        physicalType: integer
+      - name: numero
+        logicalType: integer
+        physicalType: integer
+      - name: tipologia
+        logicalType: string
+        physicalType: text
+        description: S = sentenza, O = ordinanza
+      - name: presidente
+        logicalType: string
+        physicalType: text
+      - name: relatore
+        logicalType: string
+        physicalType: text
+      - name: redattore
+        logicalType: string
+        physicalType: text
+      - name: data_decisione
+        logicalType: date
+        physicalType: date
+        description: Decision date; empty for a few old ordinanze that have none at the source
+      - name: data_deposito
+        logicalType: date
+        physicalType: date
+      - name: collegio
+        logicalType: string
+        physicalType: text
+      - name: epigrafe
+        logicalType: string
+        physicalType: text
+      - name: fatto
+        logicalType: string
+        physicalType: text
+      - name: diritto
+        logicalType: string
+        physicalType: text
+      - name: testo
+        logicalType: string
+        physicalType: text
+      - name: dispositivo
+        logicalType: string
+        physicalType: text
+      - name: text_raw
+        logicalType: string
+        physicalType: text
+        description: Space-joined non-blank sections of the decision
+      - name: search_vector
+        logicalType: string
+        physicalType: tsvector
+        description: Generated italian full-text vector of text_raw
+      - name: source_url
+        logicalType: string
+        physicalType: text
+        description: Link to the decision on cortecostituzionale.it
+  - name: massime
+    physicalName: massime
+    description: Massime (headnotes) of Corte costituzionale decisions, child rows of a decision.
+    customProperties:
+      - property: search
+        value: fts
+      - property: ftsField
+        value: search_vector
+    properties:
+      - name: id
+        logicalType: integer
+        physicalType: bigint
+        primaryKey: true
+      - name: ecli
+        logicalType: string
+        physicalType: text
+        description: ECLI of the decision, rebuilt from year and number
+        customProperties:
+          - property: identifierScheme
+            value: ecli
+      - name: numero
+        logicalType: integer
+        physicalType: integer
+        description: Massima number within the decision
+      - name: titolo
+        logicalType: string
+        physicalType: text
+      - name: text_raw
+        logicalType: string
+        physicalType: text
+      - name: search_vector
+        logicalType: string
+        physicalType: tsvector
+  - name: norme_impugnate
+    physicalName: norme_impugnate
+    description: Norms challenged before the Corte costituzionale, from the registries of referral orders, appeals and conflicts. Accumulative; pending marks the latest snapshot.
+    properties:
+      - name: id
+        logicalType: integer
+        physicalType: bigint
+        primaryKey: true
+      - name: registro_tipo
+        logicalType: string
+        physicalType: text
+        description: ordinanze, ricorsi, conflitti_enti or conflitti_poteri
+      - name: registro_anno
+        logicalType: integer
+        physicalType: integer
+      - name: registro_numero
+        logicalType: integer
+        physicalType: integer
+      - name: ord
+        logicalType: integer
+        physicalType: integer
+        description: Position of the norm inside the registry entry
+      - name: norma_descrizione
+        logicalType: string
+        physicalType: text
+      - name: norma_numero
+        logicalType: string
+        physicalType: text
+      - name: norma_data
+        logicalType: string
+        physicalType: text
+      - name: norma_articolo
+        logicalType: string
+        physicalType: text
+      - name: norma_comma
+        logicalType: string
+        physicalType: text
+      - name: norma_specificazione_articolo
+        logicalType: string
+        physicalType: text
+      - name: norma_specificazione_comma
+        logicalType: string
+        physicalType: text
+      - name: norma_nesso
+        logicalType: string
+        physicalType: text
+      - name: norma_urn
+        logicalType: string
+        physicalType: text
+        description: Best-effort URN of the challenged norm (legge, d.lgs., d.l., d.P.R.)
+        customProperties:
+          - property: identifierScheme
+            value: urn:nir
+          - property: references
+            value:
+              dataset: it-normativa
+              field: units.urn
+              identifierScheme: urn:nir
+      - name: ecli
+        logicalType: string
+        physicalType: text
+        description: Decision that cites the registry number in its epigrafe, when known
+        customProperties:
+          - property: identifierScheme
+            value: ecli
+      - name: ecli_via
+        logicalType: string
+        physicalType: text
+        description: How the decision was linked (epigrafe)
+      - name: pending
+        logicalType: boolean
+        physicalType: boolean
+        description: Present in the latest registry snapshot
+      - name: first_seen
+        logicalType: timestamp
+        physicalType: timestamptz
+      - name: last_seen
+        logicalType: timestamp
+        physicalType: timestamptz
+      - name: norma_act_urn
+        logicalType: string
+        physicalType: text
+        description: Generated act part of norma_urn
+        customProperties:
+          - property: identifierScheme
+            value: urn:nir
+          - property: references
+            value:
+              dataset: it-normativa
+              field: acts.act_urn
+              identifierScheme: urn:nir
+  - name: cassazione_sentenze
+    physicalName: cassazione_sentenze
+    description: Sentences of the Corte di cassazione (ItalGiure). Not open data. text_anon is the anonymized text, served as extremes and snippet only; text_raw_original is retained and never served.
+    customProperties:
+      - property: search
+        value: fts
+      - property: ftsField
+        value: search_vector
+    properties:
+      - name: source_id
+        logicalType: string
+        physicalType: text
+        primaryKey: true
+        description: ItalGiure Solr id
+      - name: kind
+        logicalType: string
+        physicalType: text
+        description: snciv (civil) or snpen (criminal)
+      - name: ecli
+        logicalType: string
+        physicalType: text
+        description: Rebuilt ECLI; NOT unique and not an identity
+        customProperties:
+          - property: identifierScheme
+            value: ecli
+      - name: sezione
+        logicalType: string
+        physicalType: text
+      - name: anno
+        logicalType: integer
+        physicalType: integer
+        description: Deposit year (Solr field anno)
+      - name: num_dec
+        logicalType: integer
+        physicalType: integer
+      - name: data_decisione
+        logicalType: date
+        physicalType: date
+      - name: data_deposito
+        logicalType: date
+        physicalType: date
+      - name: presidente
+        logicalType: string
+        physicalType: text
+      - name: relatore
+        logicalType: string
+        physicalType: text
+      - name: materia
+        logicalType: string
+        physicalType: text
+      - name: tipo_prov
+        logicalType: string
+        physicalType: text
+      - name: text_raw_original
+        logicalType: string
+        physicalType: text
+        description: Original text, retained and never served
+        customProperties:
+          - property: largeValue
+            value: true
+      - name: text_anon
+        logicalType: string
+        physicalType: text
+        description: Anonymized text; used for search and passages, not returned verbatim
+        customProperties:
+          - property: largeValue
+            value: true
+      - name: ocr_dis_anon
+        logicalType: string
+        physicalType: text
+        description: Anonymized dispositivo
+        customProperties:
+          - property: largeValue
+            value: true
+      - name: redaction_report
+        logicalType: object
+        physicalType: jsonb
+        description: Counts and categories of the anonymization, never the redacted strings
+      - name: source_url
+        logicalType: string
+        physicalType: text
+      - name: ingested_at
+        logicalType: timestamp
+        physicalType: timestamptz
+      - name: search_vector
+        logicalType: string
+        physicalType: tsvector
+        description: Generated italian full-text vector of text_anon
+  - name: cgt_sentenze
+    physicalName: cgt_sentenze
+    description: Decisions of the Corti di giustizia tributaria (MEF DocTrib). text_anon is served as extremes and snippet only; text_raw_original is retained and never served.
+    customProperties:
+      - property: search
+        value: fts
+      - property: ftsField
+        value: search_vector
+    properties:
+      - name: id
+        logicalType: string
+        physicalType: uuid
+        primaryKey: true
+        description: DocTrib GUID
+      - name: tipo
+        logicalType: string
+        physicalType: text
+      - name: data
+        logicalType: date
+        physicalType: date
+      - name: grado
+        logicalType: integer
+        physicalType: smallint
+        description: 1 = primo grado, 2 = secondo grado
+      - name: luogo
+        logicalType: string
+        physicalType: text
+      - name: sezione
+        logicalType: string
+        physicalType: text
+      - name: numero
+        logicalType: integer
+        physicalType: integer
+      - name: anno
+        logicalType: integer
+        physicalType: integer
+      - name: estremi
+        logicalType: string
+        physicalType: text
+      - name: text_raw_original
+        logicalType: string
+        physicalType: text
+        customProperties:
+          - property: largeValue
+            value: true
+      - name: text_anon
+        logicalType: string
+        physicalType: text
+        customProperties:
+          - property: largeValue
+            value: true
+      - name: redaction_report
+        logicalType: object
+        physicalType: jsonb
+      - name: source_url
+        logicalType: string
+        physicalType: text
+      - name: ingested_at
+        logicalType: timestamp
+        physicalType: timestamptz
+      - name: search_vector
+        logicalType: string
+        physicalType: tsvector
+  - name: passages
+    physicalName: passages
+    description: Embeddable passages of every corpus (pronuncia bodies, massime, Cassazione and CGT bodies). The text is never returned by generated Tools.
+    customProperties:
+      - property: search
+        value: vector
+      - property: embeddingField
+        value: embedding
+      - property: embeddingModel
+        value: jina-embeddings-v3
+    properties:
+      - name: id
+        logicalType: integer
+        physicalType: bigint
+        primaryKey: true
+      - name: corpus
+        logicalType: string
+        physicalType: text
+        description: pronuncia, massima, cassazione or cgt
+      - name: doc_key
+        logicalType: string
+        physicalType: text
+        description: ecli, source_id or guid of the parent document
+      - name: seq
+        logicalType: integer
+        physicalType: integer
+      - name: kind
+        logicalType: string
+        physicalType: text
+      - name: text
+        logicalType: string
+        physicalType: text
+        customProperties:
+          - property: largeValue
+            value: true
+      - name: text_contextual
+        logicalType: string
+        physicalType: text
+        description: Text with its citation prefix; the text that is embedded
+        customProperties:
+          - property: largeValue
+            value: true
+      - name: embedding
+        logicalType: array
+        physicalType: vector(1024)
+  - name: cgt_skipped
+    physicalName: cgt_skipped
+    description: Tax justice documents without text at the source, skipped and counted.
+    properties:
+      - name: guid
+        logicalType: string
+        physicalType: uuid
+        primaryKey: true
+      - name: estremi
+        logicalType: string
+        physicalType: text
+      - name: reason
+        logicalType: string
+        physicalType: text
+      - name: seen_at
+        logicalType: timestamp
+        physicalType: timestamptz

@@ -1,0 +1,15 @@
+{
+  "description": "Corte costituzionale cases that challenge a norm: the registries of referral orders, appeals and conflicts (norme impugnate) matched by norm URN, with the decision when it is known. Matching is the legacy one: the URN itself, the whole act, or any article of the act, so an article query also returns the rows of the other articles of the act (norma_articolo tells them apart). Each row carries registro_tipo/anno/numero, the norm, pending (still in the latest registry snapshot), resolved (the decision is loaded) and, when resolved, ecli, anno, numero, tipologia, data_deposito and source_url; unresolved_registri counts the rows without a decision. The registries list PENDING cases and a decision is linked only through the registry number quoted in its epigrafe: absence of results is NOT proof that no decision exists. Parameters: norma_urn (URN:NIR, act or article level, e.g. urn:nir:stato:legge:2022-12-29;197~art1). Example: {\"norma_urn\": \"urn:nir:stato:decreto.legislativo:1998-07-25;286~art40\"}.",
+  "version": 1,
+  "parameters": {
+    "type": "object",
+    "required": ["norma_urn"],
+    "properties": {
+      "norma_urn": { "type": "string", "pattern": "^urn:nir:", "maxLength": 500 }
+    }
+  },
+  "annotations": { "readOnlyHint": true, "idempotentHint": true },
+  "maxRows": 500,
+  "timeoutMs": 5000,
+  "pagination": "none"
+}

@@ -1,0 +1,5 @@
+{
+  "check": { "kind": "cc", "bundles": ["massime_2001_oggi"] },
+  "run": { "kind": "cc", "bundles": ["massime_2001_oggi"] },
+  "expect": { "minItems": 1 }
+}

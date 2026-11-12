@@ -1,0 +1,10 @@
+{
+  "tool": "pronuncia",
+  "params": {
+    "ecli": "ECLI:IT:COST:2001:1"
+  },
+  "expect": {
+    "minRows": 0,
+    "maxRows": 1
+  }
+}

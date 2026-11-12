@@ -1,0 +1,16 @@
+{
+  "description": "The massime of one Corte costituzionale decision, in massima-number order: numero, titolo, testo and the source link. Parameters: ecli (ECLI:IT:COST:<year>:<number>). An unknown decision and a decision without massime both give no rows (use pronuncia to tell them apart). Example: {\"ecli\": \"ECLI:IT:COST:2017:180\"}.",
+  "version": 1,
+  "parameters": {
+    "type": "object",
+    "required": ["ecli"],
+    "properties": {
+      "ecli": { "type": "string", "pattern": "^ECLI:IT:COST:[0-9]{4}:[0-9]+$" }
+    }
+  },
+  "annotations": { "readOnlyHint": true, "idempotentHint": true },
+  "maxRows": 200,
+  "maxBytes": 1048576,
+  "timeoutMs": 5000,
+  "pagination": "none"
+}

@@ -1,0 +1,25 @@
+{
+  "description": "Search the Corti di giustizia tributaria decisions (first and second grade, MEF DocTrib, post-reform only). Hybrid mode fuses full-text (italian) and vector ranking with reciprocal rank fusion. LEGAL POSTURE: the full text is never returned; each hit gives the extremes (id, tipo, grado, luogo, sezione, anno, numero, data, estremi), a short highlight or passage (headline, snippet, at most 1500 characters) and the source_url of the MEF page. Documents the MEF publishes without text exist but are not searchable (the status Tool reports their count). Parameters: query (web-search syntax), k (1..50, default 20), mode (hybrid, lexical, semantic), filters grado (1 or 2), luogo (exact, case-sensitive, e.g. Campania), anno_from and anno_to (anno_from must not exceed anno_to). With no query the newest decisions are listed first (filters narrow the list; a call without any parameter lists the newest). Example: {\"query\": \"avviso di accertamento motivazione\", \"grado\": 2, \"luogo\": \"Campania\"}.",
+  "version": 1,
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "query": {
+        "type": "string",
+        "maxLength": 1000,
+        "x-embed": { "into": "q_vec", "column": "passages.embedding", "model": "jina-embeddings-v3" }
+      },
+      "k": { "type": "integer", "minimum": 1, "maximum": 50, "default": 20 },
+      "mode": { "type": "string", "enum": ["hybrid", "lexical", "semantic"], "default": "hybrid" },
+      "grado": { "type": "integer", "enum": [1, 2] },
+      "luogo": { "type": "string", "maxLength": 200 },
+      "anno_from": { "type": "integer" },
+      "anno_to": { "type": "integer" }
+    }
+  },
+  "annotations": { "readOnlyHint": true, "idempotentHint": true },
+  "maxRows": 50,
+  "maxBytes": 262144,
+  "timeoutMs": 15000,
+  "pagination": "none"
+}

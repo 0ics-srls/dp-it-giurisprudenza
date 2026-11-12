@@ -1,0 +1,36 @@
+{
+  "description": "Search the Corte costituzionale case law (pronunce and massime, CC BY-SA 3.0 open data) by text, meaning or both. Hybrid mode fuses full-text (italian) and vector ranking with reciprocal rank fusion; massime outrank decisions when equally close. Each hit is a massima or a pronuncia (source), with ecli, massima_numero, titolo, headline (text highlight, null for purely semantic hits), snippet, source_url and its position. Parameters: query (web-search syntax: \"exact phrase\", word OR word, -excluded), k (1..50, default 10), mode (hybrid, lexical, semantic), filters tipologia (S sentenza, O ordinanza), anno_from, anno_to, relatore (substring), deposito_from and deposito_to (YYYY-MM-DD, inclusive). At least a query or one filter is required; filters alone list decisions ordered by ECLI. There is no numeric score: results are in relevance order. Example: {\"query\": \"licenziamento illegittimo\", \"tipologia\": \"S\", \"k\": 5}.",
+  "version": 1,
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "query": {
+        "type": "string",
+        "maxLength": 1000,
+        "x-embed": { "into": "q_vec", "column": "passages.embedding", "model": "jina-embeddings-v3" }
+      },
+      "k": { "type": "integer", "minimum": 1, "maximum": 50, "default": 10 },
+      "mode": { "type": "string", "enum": ["hybrid", "lexical", "semantic"], "default": "hybrid" },
+      "tipologia": { "type": "string", "enum": ["S", "O"] },
+      "anno_from": { "type": "integer" },
+      "anno_to": { "type": "integer" },
+      "relatore": { "type": "string", "maxLength": 200 },
+      "deposito_from": { "type": "string", "format": "date" },
+      "deposito_to": { "type": "string", "format": "date" }
+    },
+    "anyOf": [
+      { "required": ["query"] },
+      { "required": ["tipologia"] },
+      { "required": ["anno_from"] },
+      { "required": ["anno_to"] },
+      { "required": ["relatore"] },
+      { "required": ["deposito_from"] },
+      { "required": ["deposito_to"] }
+    ]
+  },
+  "annotations": { "readOnlyHint": true, "idempotentHint": true },
+  "maxRows": 50,
+  "maxBytes": 1048576,
+  "timeoutMs": 15000,
+  "pagination": "none"
+}

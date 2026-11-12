@@ -1,0 +1,166 @@
+{
+  "common": {
+    "loading": "Načítavam...",
+    "error": "Údaje sa nepodarilo načítať.",
+    "retry": "Skúsiť znova",
+    "previous": "Predchádzajúce",
+    "next": "Ďalšie",
+    "pager": "Stránky",
+    "range": "{{from}}-{{to}} z {{total}}",
+    "openSource": "Otvoriť na zdroji",
+    "any": "Všetky",
+    "annoFrom": "Rok od",
+    "annoTo": "Rok do"
+  },
+  "corpus": {
+    "title": "Judikatúra",
+    "tablist": "Korpusy",
+    "tabs": {
+      "cc": "Ústavný súd",
+      "cass": "Kasačný súd",
+      "cgt": "Daňové súdy"
+    }
+  },
+  "cc": {
+    "search": "Hľadať v rozhodnutiach",
+    "searchPlaceholder": "napr. licenziamento illegittimo",
+    "tipologia": "Druh",
+    "kindS": "Nálezy",
+    "kindO": "Uznesenia",
+    "empty": "Žiadne rozhodnutia.",
+    "rangeHint": "Rozsah rokov sa zobrazí bez stránkovania (najviac 50 rozhodnutí podľa ECLI). Pre stránkovanie zvoľte jeden rok.",
+    "columns": {
+      "ecli": "ECLI",
+      "kind": "Druh",
+      "deposit": "Zverejnené",
+      "relatore": "Spravodajca",
+      "massime": "Právne vety"
+    },
+    "source": {
+      "massima": "právna veta",
+      "pronuncia": "rozhodnutie"
+    },
+    "massimaNo": "právna veta č. {{n}}"
+  },
+  "cass": {
+    "search": "Hľadať v rozsudkoch",
+    "searchPlaceholder": "napr. tributi",
+    "kind": "Odvetvie",
+    "kindCiv": "Občianske",
+    "kindPen": "Trestné",
+    "sezione": "Senát",
+    "materia": "Vec",
+    "empty": "Žiadne rozsudky.",
+    "notice": "Zobrazujú sa iba základné údaje, výťah a odkaz na oficiálny zdroj, nikdy nie úplný text.",
+    "columns": {
+      "ecli": "ECLI",
+      "sezione": "Senát",
+      "anno": "Rok",
+      "numDec": "Č.",
+      "date": "Rozhodnuté",
+      "materia": "Vec"
+    }
+  },
+  "cgt": {
+    "search": "Hľadať v rozhodnutiach",
+    "searchPlaceholder": "napr. accertamento",
+    "grado": "Stupeň",
+    "grado1": "Prvý stupeň",
+    "grado2": "Druhý stupeň",
+    "luogo": "Miesto",
+    "empty": "Žiadne rozhodnutia.",
+    "notice": "Zobrazujú sa iba základné údaje, výťah a odkaz na oficiálny zdroj, nikdy nie úplný text.",
+    "columns": {
+      "estremi": "Základné údaje",
+      "grado": "Stupeň",
+      "luogo": "Miesto",
+      "date": "Dátum"
+    }
+  },
+  "decision": {
+    "title": "Rozhodnutie",
+    "missing": "Otvorte rozhodnutie zo zoznamu, aby ste videli jeho detail.",
+    "back": "Späť na judikatúru",
+    "notFound": "Rozhodnutie sa nenašlo.",
+    "openSource": "Otvoriť na stránke súdu",
+    "attribution": "Corte costituzionale, dati.cortecostituzionale.it, CC BY-SA 3.0",
+    "header": {
+      "ecli": "ECLI",
+      "kind": "Druh",
+      "number": "Číslo",
+      "deposit": "Zverejnené",
+      "decided": "Rozhodnuté",
+      "presidente": "Predseda",
+      "relatore": "Spravodajca",
+      "redattore": "Redaktor",
+      "collegio": "Kolégium"
+    },
+    "sections": {
+      "epigrafe": "Záhlavie",
+      "fatto": "Skutkový stav",
+      "diritto": "Právne posúdenie",
+      "testo": "Text",
+      "dispositivo": "Výrok"
+    },
+    "collapse": "Skryť",
+    "expand": "Zobraziť",
+    "massime": {
+      "heading": "Právne vety",
+      "empty": "Toto rozhodnutie nemá právne vety.",
+      "number": "č. {{n}}",
+      "error": "Právne vety sa nepodarilo načítať."
+    },
+    "norma": {
+      "heading": "Konania napádajúce normu",
+      "help": "Zadajte URN:NIR (akt alebo článok) a zobrazia sa záznamy registrov napádaných noriem.",
+      "label": "URN normy",
+      "placeholder": "urn:nir:stato:legge:2022-12-29;197~art1",
+      "submit": "Hľadať",
+      "invalid": "Zadajte URN začínajúce urn:nir: (napr. urn:nir:stato:legge:2022-12-29;197~art1).",
+      "empty": "Tejto norme sa nezodpovedá žiadny záznam registra.",
+      "note": "Registre uvádzajú prebiehajúce konania a rozhodnutie sa prepája iba cez číslo registra z jeho záhlavia: neprítomnosť výsledkov nie je dôkazom, že rozhodnutie neexistuje.",
+      "resolved": "Priradené: {{count}}",
+      "unresolved": "Záznamy registra bez rozhodnutia: {{count}}",
+      "stateResolved": "Priradené",
+      "stateUnresolved": "Nepriradené",
+      "pending": "prebieha",
+      "registro": "Register {{tipo}} {{numero}}/{{anno}}",
+      "open": "Otvoriť rozhodnutie"
+    },
+    "detail": {
+      "notice": "Zobrazujú sa iba základné údaje, výťah a odkaz na oficiálny zdroj, nikdy nie úplný text: úplný text si prečítajte na oficiálnom zdroji.",
+      "snippet": "Výťah"
+    }
+  },
+  "status": {
+    "title": "Stav načítania",
+    "corpora": {
+      "cc": "Ústavný súd",
+      "cassazione": "Kasačný súd",
+      "cgt": "Daňové súdy"
+    },
+    "refresh": "Obnoviť",
+    "empty": "Zatiaľ sa nič nenačítalo.",
+    "columns": {
+      "corpus": "Korpus",
+      "documents": "Rozhodnutia",
+      "massime": "Právne vety",
+      "passages": "Pasáže",
+      "withoutEmbedding": "Bez embeddingu",
+      "lastIngested": "Posledné načítanie",
+      "note": "Pokrytie a obmedzenia"
+    },
+    "warningHint": "Pasáže bez vektora sa sémantickým hľadaním nenájdu, kým nebeží krok embeddingu.",
+    "norme": "Záznamy registra: prebiehajúce {{pending}}, s rozhodnutím {{resolved}}, bez rozhodnutia {{unresolved}}",
+    "skipped": "Dokumenty bez textu na zdroji (nevyhľadateľné): {{count}}",
+    "notes": {
+      "cc": "Ústavný súd, otvorené dáta CC BY-SA 3.0, úplný text. Registre napadnutých ustanovení obsahujú prebiehajúce konania: rozhodnutie sa prepája cez číslo registra uvedené v jeho úvode a chýbajúce výsledky nedokazujú, že rozhodnutia neexistujú.",
+      "cassazione": "Kasačný súd (ItalGiure): iba od roku 2021, občianske a trestné veci. Nikdy úplný text: základné údaje, výťah a odkaz na zdroj. ECLI nie je identita: používa sa source_id.",
+      "cgt": "Daňové súdy (MEF DocTrib), iba po reforme. Nikdy úplný text: základné údaje, výťah a odkaz na zdroj. Dokumenty bez textu na zdroji sa nedajú vyhľadávať (skipped_without_text)."
+    },
+    "footer": {
+      "cc": "Corte costituzionale: dati.cortecostituzionale.it, CC BY-SA 3.0 (povinné uvedenie autora, rovnaké podmienky šírenia).",
+      "others": "Kasačný súd (ItalGiure) a daňové súdy (MEF DocTrib): interné použitie, bez ďalšieho šírenia; zobrazujú sa iba základné údaje, výťah a odkaz na zdroj."
+    }
+  }
+}
