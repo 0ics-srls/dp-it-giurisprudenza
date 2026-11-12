@@ -1,4 +1,62 @@
 <section class="status">
-  <h1 data-testid="screen-title">{{ 'status.title' | transloco }}</h1>
-  <p class="empty">{{ 'common.loading' | transloco }}</p>
+  <header class="head">
+    <h1 data-testid="screen-title">{{ 'status.title' | transloco }}</h1>
+    <button type="button" data-testid="status-refresh" [disabled]="store.loading()" (click)="store.refresh()">{{ 'status.refresh' | transloco }}</button>
+  </header>
+
+  @if (store.error(); as key) {
+    <p class="error" role="alert" data-testid="status-error">{{ key | transloco }} <span class="detail">{{ store.errorDetail() }}</span></p>
+  } @else if (store.loading() && store.rows().length === 0) {
+    <p>{{ 'common.loading' | transloco }}</p>
+  } @else if (store.rows().length === 0) {
+    <p data-testid="status-empty">{{ 'status.empty' | transloco }}</p>
+  } @else {
+    <table class="grid">
+      <thead>
+        <tr>
+          <th scope="col">{{ 'status.columns.corpus' | transloco }}</th>
+          <th scope="col" class="num">{{ 'status.columns.documents' | transloco }}</th>
+          <th scope="col" class="num">{{ 'status.columns.massime' | transloco }}</th>
+          <th scope="col" class="num">{{ 'status.columns.passages' | transloco }}</th>
+          <th scope="col" class="num">{{ 'status.columns.withoutEmbedding' | transloco }}</th>
+          <th scope="col">{{ 'status.columns.lastIngested' | transloco }}</th>
+          <th scope="col">{{ 'status.columns.note' | transloco }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of store.rows(); track row.corpus) {
+          <tr data-testid="status-row">
+            <td>{{ 'status.corpora.' + row.corpus | transloco }}</td>
+            <td class="num">{{ row.documents }}</td>
+            <td class="num">{{ row.massime }}</td>
+            <td class="num">{{ row.passages }}</td>
+            <td class="num">
+              @if (row.passagesWithoutEmbedding > 0) {
+                <span class="warning" role="status" data-testid="status-warning" [title]="'status.warningHint' | transloco">{{ row.passagesWithoutEmbedding }}</span>
+              } @else {
+                0
+              }
+            </td>
+            <td>{{ row.lastIngestedAt | date: 'yyyy-MM-dd HH:mm' : 'UTC' }}</td>
+            <td class="note">
+              {{ row.note }}
+              @if (row.normePending !== null) {
+                <div class="extra" data-testid="status-norme">
+                  {{ 'status.norme' | transloco: { pending: row.normePending, resolved: row.normeResolved, unresolved: row.normeUnresolved } }}
+                </div>
+              }
+              @if (row.skippedWithoutText !== null) {
+                <div class="extra" data-testid="status-skipped">{{ 'status.skipped' | transloco: { count: row.skippedWithoutText } }}</div>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  <footer class="footer" data-testid="status-footer">
+    <p>{{ 'status.footer.cc' | transloco }}</p>
+    <p>{{ 'status.footer.others' | transloco }}</p>
+  </footer>
 </section>

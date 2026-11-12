@@ -19,6 +19,6 @@ describe('dictionaries', () => {
   });
 
   it('should find template keys when scanning (no vacuous pass)', () => {
-    expect(templateKeys(APP_ROOT).length).toBeGreaterThan(2);
+    expect(templateKeys(APP_ROOT).length).toBeGreaterThan(20);
   });
 });

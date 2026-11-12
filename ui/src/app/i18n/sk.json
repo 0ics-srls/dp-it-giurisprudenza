@@ -133,6 +133,29 @@
     }
   },
   "status": {
-    "title": "Stav načítania"
+    "title": "Stav načítania",
+    "corpora": {
+      "cc": "Ústavný súd",
+      "cassazione": "Kasačný súd",
+      "cgt": "Daňové súdy"
+    },
+    "refresh": "Obnoviť",
+    "empty": "Zatiaľ sa nič nenačítalo.",
+    "columns": {
+      "corpus": "Korpus",
+      "documents": "Rozhodnutia",
+      "massime": "Právne vety",
+      "passages": "Pasáže",
+      "withoutEmbedding": "Bez embeddingu",
+      "lastIngested": "Posledné načítanie",
+      "note": "Pokrytie a obmedzenia"
+    },
+    "warningHint": "Pasáže bez vektora sa sémantickým hľadaním nenájdu, kým nebeží krok embeddingu.",
+    "norme": "Záznamy registra: prebiehajúce {{pending}}, s rozhodnutím {{resolved}}, bez rozhodnutia {{unresolved}}",
+    "skipped": "Dokumenty bez textu na zdroji (nevyhľadateľné): {{count}}",
+    "footer": {
+      "cc": "Corte costituzionale: dati.cortecostituzionale.it, CC BY-SA 3.0 (povinné uvedenie autora, rovnaké podmienky šírenia).",
+      "others": "Kasačný súd (ItalGiure) a daňové súdy (MEF DocTrib): interné použitie, bez ďalšieho šírenia; zobrazujú sa iba základné údaje, výťah a odkaz na zdroj."
+    }
   }
 }

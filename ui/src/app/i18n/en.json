@@ -133,6 +133,29 @@
     }
   },
   "status": {
-    "title": "Ingest status"
+    "title": "Ingest status",
+    "corpora": {
+      "cc": "Constitutional Court",
+      "cassazione": "Cassation",
+      "cgt": "Tax courts"
+    },
+    "refresh": "Refresh",
+    "empty": "Nothing has been ingested yet.",
+    "columns": {
+      "corpus": "Corpus",
+      "documents": "Decisions",
+      "massime": "Massime",
+      "passages": "Passages",
+      "withoutEmbedding": "Without embedding",
+      "lastIngested": "Last ingest",
+      "note": "Coverage and limits"
+    },
+    "warningHint": "Passages without a vector are not found by the semantic search until the embedding step runs.",
+    "norme": "Registry rows: pending {{pending}}, with a decision {{resolved}}, without a decision {{unresolved}}",
+    "skipped": "Documents without text at the source (not searchable): {{count}}",
+    "footer": {
+      "cc": "Corte costituzionale: dati.cortecostituzionale.it, CC BY-SA 3.0 (attribution required, share-alike).",
+      "others": "Cassazione (ItalGiure) and tax courts (MEF DocTrib): internal use, no redistribution; only the extremes, an excerpt and the link to the source are shown."
+    }
   }
 }

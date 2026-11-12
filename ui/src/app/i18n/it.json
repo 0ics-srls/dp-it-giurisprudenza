@@ -133,6 +133,29 @@
     }
   },
   "status": {
-    "title": "Stato dell'ingestione"
+    "title": "Stato dell'ingestione",
+    "corpora": {
+      "cc": "Corte costituzionale",
+      "cassazione": "Cassazione",
+      "cgt": "Tributaria"
+    },
+    "refresh": "Aggiorna",
+    "empty": "Nessun dato è stato ancora ingerito.",
+    "columns": {
+      "corpus": "Corpus",
+      "documents": "Decisioni",
+      "massime": "Massime",
+      "passages": "Passaggi",
+      "withoutEmbedding": "Senza embedding",
+      "lastIngested": "Ultima ingestione",
+      "note": "Copertura e limiti"
+    },
+    "warningHint": "I passaggi senza vettore non sono trovati dalla ricerca semantica finché non gira il passo di embedding.",
+    "norme": "Righe di registro: pendenti {{pending}}, con decisione {{resolved}}, senza decisione {{unresolved}}",
+    "skipped": "Documenti senza testo alla fonte (non ricercabili): {{count}}",
+    "footer": {
+      "cc": "Corte costituzionale: dati.cortecostituzionale.it, CC BY-SA 3.0 (attribuzione richiesta, condivisione allo stesso modo).",
+      "others": "Cassazione (ItalGiure) e giustizia tributaria (MEF DocTrib): uso interno, nessuna ridistribuzione; si mostrano solo gli estremi, un estratto e il link alla fonte."
+    }
   }
 }
