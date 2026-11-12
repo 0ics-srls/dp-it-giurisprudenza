@@ -31,6 +31,8 @@ schema:
         value: fts
       - property: ftsField
         value: search_vector
+      - property: ftsConfig
+        value: italian
     properties:
       - name: ecli
         logicalType: string
@@ -104,6 +106,8 @@ schema:
         value: fts
       - property: ftsField
         value: search_vector
+      - property: ftsConfig
+        value: italian
     properties:
       - name: id
         logicalType: integer
@@ -228,6 +232,8 @@ schema:
         value: fts
       - property: ftsField
         value: search_vector
+      - property: ftsConfig
+        value: italian
     properties:
       - name: source_id
         logicalType: string
@@ -316,6 +322,8 @@ schema:
         value: fts
       - property: ftsField
         value: search_vector
+      - property: ftsConfig
+        value: italian
     properties:
       - name: id
         logicalType: string
