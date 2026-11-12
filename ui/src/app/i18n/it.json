@@ -1,0 +1,161 @@
+{
+  "common": {
+    "loading": "Caricamento...",
+    "error": "Impossibile caricare i dati.",
+    "retry": "Riprova",
+    "previous": "Precedente",
+    "next": "Successiva",
+    "pager": "Pagine",
+    "range": "{{from}}-{{to}} di {{total}}",
+    "openSource": "Apri alla fonte",
+    "any": "Tutti",
+    "annoFrom": "Anno da",
+    "annoTo": "Anno a"
+  },
+  "corpus": {
+    "title": "Giurisprudenza",
+    "tablist": "Corpus",
+    "tabs": {
+      "cc": "Corte costituzionale",
+      "cass": "Cassazione",
+      "cgt": "Tributaria"
+    }
+  },
+  "cc": {
+    "search": "Cerca nelle decisioni",
+    "searchPlaceholder": "es. licenziamento illegittimo",
+    "tipologia": "Tipologia",
+    "kindS": "Sentenze",
+    "kindO": "Ordinanze",
+    "empty": "Nessuna decisione trovata.",
+    "rangeHint": "Un intervallo di anni è elencato senza paginazione (fino a 50 decisioni, ordinate per ECLI). Usare un solo anno per la paginazione.",
+    "columns": {
+      "ecli": "ECLI",
+      "kind": "Tipo",
+      "deposit": "Deposito",
+      "relatore": "Relatore",
+      "massime": "Massime"
+    },
+    "source": {
+      "massima": "massima",
+      "pronuncia": "pronuncia"
+    },
+    "massimaNo": "massima n. {{n}}"
+  },
+  "cass": {
+    "search": "Cerca nelle sentenze",
+    "searchPlaceholder": "es. tributi",
+    "kind": "Settore",
+    "kindCiv": "Civile",
+    "kindPen": "Penale",
+    "sezione": "Sezione",
+    "materia": "Materia",
+    "empty": "Nessuna sentenza trovata.",
+    "notice": "Si mostrano solo gli estremi, un estratto e il link alla fonte ufficiale, mai il testo integrale.",
+    "columns": {
+      "ecli": "ECLI",
+      "sezione": "Sezione",
+      "anno": "Anno",
+      "numDec": "N.",
+      "date": "Decisione",
+      "materia": "Materia"
+    }
+  },
+  "cgt": {
+    "search": "Cerca nelle decisioni",
+    "searchPlaceholder": "es. accertamento",
+    "grado": "Grado",
+    "grado1": "Primo grado",
+    "grado2": "Secondo grado",
+    "luogo": "Luogo",
+    "empty": "Nessuna decisione trovata.",
+    "notice": "Si mostrano solo gli estremi, un estratto e il link alla fonte ufficiale, mai il testo integrale.",
+    "columns": {
+      "estremi": "Estremi",
+      "grado": "Grado",
+      "luogo": "Luogo",
+      "date": "Data"
+    }
+  },
+  "decision": {
+    "title": "Decisione",
+    "missing": "Aprire una decisione dall'elenco per vederne il dettaglio.",
+    "back": "Torna alla giurisprudenza",
+    "notFound": "Decisione non trovata.",
+    "openSource": "Apri sul sito della Corte",
+    "attribution": "Corte costituzionale, dati.cortecostituzionale.it, CC BY-SA 3.0",
+    "header": {
+      "ecli": "ECLI",
+      "kind": "Tipologia",
+      "number": "Numero",
+      "deposit": "Deposito",
+      "decided": "Decisione",
+      "presidente": "Presidente",
+      "relatore": "Relatore",
+      "redattore": "Redattore",
+      "collegio": "Collegio"
+    },
+    "sections": {
+      "epigrafe": "Epigrafe",
+      "fatto": "Fatto",
+      "diritto": "Diritto",
+      "testo": "Testo",
+      "dispositivo": "Dispositivo"
+    },
+    "collapse": "Nascondi",
+    "expand": "Mostra",
+    "massime": {
+      "heading": "Massime",
+      "empty": "Nessuna massima per questa decisione.",
+      "number": "n. {{n}}",
+      "error": "Impossibile caricare le massime."
+    },
+    "norma": {
+      "heading": "Giudizi su una norma",
+      "help": "Inserire un URN:NIR (atto o articolo) per elencare le righe dei registri delle norme impugnate.",
+      "label": "URN della norma",
+      "placeholder": "urn:nir:stato:legge:2022-12-29;197~art1",
+      "submit": "Cerca",
+      "invalid": "Inserire un URN che inizi con urn:nir: (ad esempio urn:nir:stato:legge:2022-12-29;197~art1).",
+      "empty": "Nessuna riga dei registri corrisponde a questa norma.",
+      "note": "I registri elencano cause pendenti e una decisione è collegata solo tramite il numero di registro citato nell'epigrafe: l'assenza di risultati non è prova che non esistano pronunce.",
+      "resolved": "Collegate: {{count}}",
+      "unresolved": "Righe di registro senza decisione: {{count}}",
+      "stateResolved": "Collegata",
+      "stateUnresolved": "Non collegata",
+      "pending": "pendente",
+      "registro": "Registro {{tipo}} {{numero}}/{{anno}}",
+      "open": "Apri la decisione"
+    },
+    "detail": {
+      "notice": "Si mostrano solo gli estremi, un estratto e il link alla fonte ufficiale, mai il testo integrale: il testo integrale si legge alla fonte ufficiale.",
+      "snippet": "Estratto"
+    }
+  },
+  "status": {
+    "title": "Stato dell'ingestione",
+    "corpora": {
+      "cc": "Corte costituzionale",
+      "cassazione": "Cassazione",
+      "cgt": "Tributaria"
+    },
+    "refresh": "Aggiorna",
+    "empty": "Nessun dato è stato ancora ingerito.",
+    "columns": {
+      "corpus": "Corpus",
+      "documents": "Decisioni",
+      "massime": "Massime",
+      "passages": "Passaggi",
+      "withoutEmbedding": "Senza embedding",
+      "lastIngested": "Ultima ingestione",
+      "note": "Copertura e limiti"
+    },
+    "warningHint": "I passaggi senza vettore non sono trovati dalla ricerca semantica finché non gira il passo di embedding.",
+    "norme": "Righe di registro: pendenti {{pending}}, con decisione {{resolved}}, senza decisione {{unresolved}}",
+    "skipped": "Documenti senza testo alla fonte (non ricercabili): {{count}}",
+    "footer": {
+      "cc": "Corte costituzionale: dati.cortecostituzionale.it, CC BY-SA 3.0 (attribuzione richiesta, condivisione allo stesso modo).",
+      "others": "Cassazione (ItalGiure) e giustizia tributaria (MEF DocTrib): uso interno, nessuna ridistribuzione; si mostrano solo gli estremi, un estratto e il link alla fonte."
+    }
+  }
+}

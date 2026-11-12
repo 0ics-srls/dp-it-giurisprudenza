@@ -1,0 +1,20 @@
+{
+  "description": "Extremes of Corte di cassazione sentences by ecli and/or source_id: source_id, ecli, kind, sezione, anno, num_dec, data_decisione, materia, tipo_prov, a short snippet (the start of the text, at most 1500 characters) and the source_url to read the full sentence at ItalGiure. LEGAL POSTURE: the full text is never returned. An ecli is not unique (a civil and a criminal sentence can share it), so every match is returned (at most 5); source_id is unique. Parameters: ecli, source_id (at least one). Example: {\"source_id\": \"snciv2025006063\"}.",
+  "version": 1,
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "ecli": { "type": "string", "maxLength": 100 },
+      "source_id": { "type": "string", "maxLength": 100 }
+    },
+    "anyOf": [
+      { "required": ["ecli"] },
+      { "required": ["source_id"] }
+    ]
+  },
+  "annotations": { "readOnlyHint": true, "idempotentHint": true },
+  "maxRows": 5,
+  "maxBytes": 262144,
+  "timeoutMs": 5000,
+  "pagination": "none"
+}

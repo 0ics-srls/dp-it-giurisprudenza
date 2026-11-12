@@ -1,0 +1,13 @@
+{
+  "description": "The manual of the Italian case-law corpus: the three corpora (Corte costituzionale, Corte di cassazione, Corti di giustizia tributaria), the legal posture (extremes + snippet + link, never the full text for Cassazione and CGT), how to search, how to navigate by ECLI and norm URN, the usual flows and the limits. Read it first. No parameters.",
+  "version": 1,
+  "parameters": {
+    "type": "object",
+    "properties": {}
+  },
+  "annotations": { "readOnlyHint": true, "idempotentHint": true },
+  "maxRows": 1,
+  "maxBytes": 65536,
+  "timeoutMs": 2000,
+  "pagination": "none"
+}

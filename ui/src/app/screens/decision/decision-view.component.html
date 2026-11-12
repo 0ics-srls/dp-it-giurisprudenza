@@ -1,0 +1,233 @@
+<section class="decision">
+  <header class="head">
+    <h1 data-testid="screen-title">{{ 'decision.title' | transloco }}</h1>
+    <button type="button" data-testid="decision-back" (click)="store.back()">{{ 'decision.back' | transloco }}</button>
+  </header>
+
+  @switch (store.state()) {
+    @case ('idle') {
+      <p class="empty" data-testid="decision-missing">{{ 'decision.missing' | transloco }}</p>
+    }
+    @case ('loading') {
+      <p data-testid="decision-loading">{{ 'common.loading' | transloco }}</p>
+    }
+    @case ('notfound') {
+      <p class="empty" data-testid="decision-notfound">{{ 'decision.notFound' | transloco }}</p>
+    }
+    @case ('error') {
+      <p class="error" role="alert" data-testid="decision-error">{{ 'common.error' | transloco }} <span class="detail">{{ store.errorDetail() }}</span></p>
+    }
+    @case ('ready') {
+      @if (store.pronuncia(); as decision) {
+        <dl class="header" data-testid="decision-header">
+          <dt>{{ 'decision.header.ecli' | transloco }}</dt>
+          <dd class="mono">{{ decision.ecli }}</dd>
+          <dt>{{ 'decision.header.kind' | transloco }}</dt>
+          <dd>{{ decision.tipologia === 'S' ? ('cc.kindS' | transloco) : ('cc.kindO' | transloco) }}</dd>
+          <dt>{{ 'decision.header.number' | transloco }}</dt>
+          <dd>{{ decision.numero }}/{{ decision.anno }}</dd>
+          <dt>{{ 'decision.header.deposit' | transloco }}</dt>
+          <dd>{{ decision.dataDeposito | date: 'yyyy-MM-dd' : 'UTC' }}</dd>
+          <dt>{{ 'decision.header.decided' | transloco }}</dt>
+          <dd>{{ decision.dataDecisione | date: 'yyyy-MM-dd' : 'UTC' }}</dd>
+          @if (decision.presidente) {
+            <dt>{{ 'decision.header.presidente' | transloco }}</dt>
+            <dd>{{ decision.presidente }}</dd>
+          }
+          @if (decision.relatore) {
+            <dt>{{ 'decision.header.relatore' | transloco }}</dt>
+            <dd>{{ decision.relatore }}</dd>
+          }
+          @if (decision.redattore) {
+            <dt>{{ 'decision.header.redattore' | transloco }}</dt>
+            <dd>{{ decision.redattore }}</dd>
+          }
+          @if (decision.collegio) {
+            <dt>{{ 'decision.header.collegio' | transloco }}</dt>
+            <dd>{{ decision.collegio }}</dd>
+          }
+        </dl>
+
+        <p class="links">
+          @if (store.sourceLink() !== '') {
+            <a data-testid="decision-source-link" [href]="store.sourceLink()" target="_blank" rel="noopener noreferrer">{{ 'decision.openSource' | transloco }}</a>
+          }
+          <span class="attribution" data-testid="decision-attribution">{{ 'decision.attribution' | transloco }}</span>
+        </p>
+
+        @for (section of store.sections(); track section.name) {
+          <section class="section" [attr.data-testid]="'section-' + section.name">
+            <h2>
+              <button
+                type="button"
+                class="toggle"
+                [attr.data-testid]="'section-toggle-' + section.name"
+                [attr.aria-expanded]="!store.collapsed().includes(section.name)"
+                (click)="store.toggle(section.name)"
+              >
+                {{ 'decision.sections.' + section.name | transloco }}
+                <span class="meta">({{ store.collapsed().includes(section.name) ? ('decision.expand' | transloco) : ('decision.collapse' | transloco) }})</span>
+              </button>
+            </h2>
+            @if (!store.collapsed().includes(section.name)) {
+              <p class="body" [attr.data-testid]="'section-body-' + section.name">{{ section.text }}</p>
+            }
+          </section>
+        }
+
+        <section class="massime">
+          <h2>{{ 'decision.massime.heading' | transloco }}</h2>
+          @if (store.massimeError()) {
+            <p class="error" role="alert" data-testid="massime-error">{{ 'decision.massime.error' | transloco }}</p>
+          } @else if (store.massime().length === 0) {
+            <p class="empty" data-testid="massime-empty">{{ 'decision.massime.empty' | transloco }}</p>
+          } @else {
+            <ol class="massime-list">
+              @for (massima of store.massime(); track massima.numero) {
+                <li data-testid="massima-row">
+                  <div class="titolo">
+                    <span class="meta">{{ 'decision.massime.number' | transloco: { n: massima.numero } }}</span>
+                    @if (massima.titolo) {
+                      <span data-testid="massima-titolo">{{ massima.titolo }}</span>
+                    }
+                  </div>
+                  <p class="body">{{ massima.testo }}</p>
+                </li>
+              }
+            </ol>
+          }
+        </section>
+
+        <section class="norma">
+          <h2>{{ 'decision.norma.heading' | transloco }}</h2>
+          <p class="meta">{{ 'decision.norma.help' | transloco }}</p>
+          <div class="norma-form">
+            <label for="gc-norma">{{ 'decision.norma.label' | transloco }}</label>
+            <input
+              id="gc-norma"
+              type="text"
+              class="norma-input"
+              data-testid="norma-input"
+              [placeholder]="'decision.norma.placeholder' | transloco"
+              [value]="store.normaText()"
+              (input)="onNorma($event)"
+            />
+            <button type="button" data-testid="norma-submit" [disabled]="store.normaState() === 'loading'" (click)="store.searchNorma()">{{ 'decision.norma.submit' | transloco }}</button>
+          </div>
+
+          @switch (store.normaState()) {
+            @case ('invalid') {
+              <p class="error" role="alert" data-testid="norma-invalid">{{ 'decision.norma.invalid' | transloco }}</p>
+            }
+            @case ('error') {
+              <p class="error" role="alert" data-testid="norma-error">{{ 'common.error' | transloco }}</p>
+            }
+            @case ('loading') {
+              <p>{{ 'common.loading' | transloco }}</p>
+            }
+            @case ('done') {
+              @if (store.normaRows().length === 0) {
+                <p class="empty" data-testid="norma-empty">{{ 'decision.norma.empty' | transloco }}</p>
+              } @else {
+                <p class="counts">
+                  <span data-testid="norma-resolved-count">{{ 'decision.norma.resolved' | transloco: { count: store.normaResolved() } }}</span>
+                  <span data-testid="norma-unresolved-count">{{ 'decision.norma.unresolved' | transloco: { count: store.normaUnresolved() } }}</span>
+                </p>
+                <ul class="norma-list">
+                  @for (row of store.normaRows(); track $index) {
+                    <li data-testid="norma-row">
+                      <div class="line">
+                        <span>{{ 'decision.norma.registro' | transloco: { tipo: row.registroTipo, numero: row.registroNumero, anno: row.registroAnno } }}</span>
+                        <span class="mono">{{ row.normaUrn }}</span>
+                        @if (row.pending) {
+                          <span class="badge">{{ 'decision.norma.pending' | transloco }}</span>
+                        }
+                        <span class="badge" data-testid="norma-state">{{ row.resolved ? ('decision.norma.stateResolved' | transloco) : ('decision.norma.stateUnresolved' | transloco) }}</span>
+                        @if (row.resolved && row.ecli) {
+                          <button type="button" class="link" data-testid="norma-open" (click)="store.openDecision(row.ecli)">{{ row.ecli }}</button>
+                        }
+                      </div>
+                      @if (row.normaDescrizione) {
+                        <div class="meta">{{ row.normaDescrizione }}</div>
+                      }
+                    </li>
+                  }
+                </ul>
+              }
+            }
+          }
+          @if (store.normaState() === 'done') {
+            <p class="meta" data-testid="norma-note">{{ 'decision.norma.note' | transloco }}</p>
+          }
+        </section>
+      }
+
+      @for (item of store.cass(); track item.hit.sourceId) {
+        <article class="detail" data-testid="detail-row">
+          <dl class="header">
+            <dt>{{ 'cass.columns.ecli' | transloco }}</dt>
+            <dd class="mono">{{ item.hit.ecli ?? item.hit.sourceId }}</dd>
+            <dt>{{ 'cass.columns.sezione' | transloco }}</dt>
+            <dd>{{ item.hit.sezione }}</dd>
+            <dt>{{ 'cass.columns.anno' | transloco }}</dt>
+            <dd>{{ item.hit.anno }}</dd>
+            <dt>{{ 'cass.columns.numDec' | transloco }}</dt>
+            <dd>{{ item.hit.numDec }}</dd>
+            <dt>{{ 'cass.columns.date' | transloco }}</dt>
+            <dd>{{ item.hit.dataDecisione | date: 'yyyy-MM-dd' : 'UTC' }}</dd>
+            @if (item.hit.materia) {
+              <dt>{{ 'cass.columns.materia' | transloco }}</dt>
+              <dd>{{ item.hit.materia }}</dd>
+            }
+          </dl>
+          <p class="excerpt" data-testid="detail-snippet">
+            @for (part of item.snippet; track $index) {
+              @if (part.mark) {
+                <mark>{{ part.text }}</mark>
+              } @else {
+                <span>{{ part.text }}</span>
+              }
+            }
+          </p>
+          @if (item.link !== '') {
+            <a data-testid="detail-source-link" [href]="item.link" target="_blank" rel="noopener noreferrer">{{ 'common.openSource' | transloco }}</a>
+          }
+        </article>
+      }
+
+      @if (store.cgt(); as item) {
+        <article class="detail" data-testid="detail-row">
+          <h2 data-testid="detail-estremi">{{ item.hit.estremi ?? item.hit.id }}</h2>
+          <dl class="header">
+            @if (item.hit.grado !== null) {
+              <dt>{{ 'cgt.columns.grado' | transloco }}</dt>
+              <dd>{{ item.hit.grado }}</dd>
+            }
+            @if (item.hit.luogo) {
+              <dt>{{ 'cgt.columns.luogo' | transloco }}</dt>
+              <dd>{{ item.hit.luogo }}</dd>
+            }
+            <dt>{{ 'cgt.columns.date' | transloco }}</dt>
+            <dd>{{ item.hit.data | date: 'yyyy-MM-dd' : 'UTC' }}</dd>
+          </dl>
+          <p class="excerpt" data-testid="detail-snippet">
+            @for (part of item.snippet; track $index) {
+              @if (part.mark) {
+                <mark>{{ part.text }}</mark>
+              } @else {
+                <span>{{ part.text }}</span>
+              }
+            }
+          </p>
+          @if (item.link !== '') {
+            <a data-testid="detail-source-link" [href]="item.link" target="_blank" rel="noopener noreferrer">{{ 'common.openSource' | transloco }}</a>
+          }
+        </article>
+      }
+
+      @if (store.key()?.kind !== 'cc') {
+        <p class="notice" data-testid="detail-notice">{{ 'decision.detail.notice' | transloco }}</p>
+      }
+    }
+  }
+</section>

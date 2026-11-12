@@ -1,0 +1,18 @@
+{
+  "description": "Paged list of Corte costituzionale decisions, newest first (anno, numero), with the number of massime of each and the total of matching decisions. Parameters: anno, tipologia (S sentenza, O ordinanza), q (ECLI fragment, e.g. 2017:18), limit (1..100, default 50), offset (default 0). Example: {\"anno\": 2017, \"tipologia\": \"S\", \"limit\": 20}.",
+  "version": 1,
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "anno": { "type": "integer" },
+      "tipologia": { "type": "string", "enum": ["S", "O"] },
+      "q": { "type": "string", "maxLength": 200 },
+      "limit": { "type": "integer", "minimum": 1, "maximum": 100, "default": 50 },
+      "offset": { "type": "integer", "minimum": 0, "default": 0 }
+    }
+  },
+  "annotations": { "readOnlyHint": true, "idempotentHint": true },
+  "maxRows": 100,
+  "timeoutMs": 5000,
+  "pagination": "offset"
+}

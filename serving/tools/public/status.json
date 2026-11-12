@@ -1,0 +1,12 @@
+{
+  "description": "Live coverage of the case-law corpus, one row per corpus (cc = Corte costituzionale, cassazione, cgt): documents, massime, passages, passages_without_embedding (not yet searchable by meaning), last_ingested_at (null for cc: the open data carries no load time), plus the limits of that corpus in note. The cc row also carries the registry counts norme_pending, norme_resolved (linked to a loaded decision) and norme_unresolved; the cgt row carries skipped_without_text, the documents the MEF publishes without text. No parameters.",
+  "version": 1,
+  "parameters": {
+    "type": "object",
+    "properties": {}
+  },
+  "annotations": { "readOnlyHint": true, "idempotentHint": true },
+  "maxRows": 3,
+  "timeoutMs": 10000,
+  "pagination": "none"
+}

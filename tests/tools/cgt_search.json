@@ -1,0 +1,11 @@
+{
+  "tool": "cgt_search",
+  "params": {
+    "query": "avviso di accertamento",
+    "mode": "lexical"
+  },
+  "expect": {
+    "minRows": 0,
+    "maxRows": 50
+  }
+}

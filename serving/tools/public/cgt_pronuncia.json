@@ -1,0 +1,16 @@
+{
+  "description": "Extremes of one Corti di giustizia tributaria decision by id (the DocTrib GUID): id, tipo, grado, luogo, sezione, anno, numero, data, estremi, a short snippet (the first stored passage, at most 1500 characters) and the source_url of the MEF page. LEGAL POSTURE: the full text is never returned. Documents the MEF publishes without text exist but have no id here (the status Tool reports their count). An unknown id gives no rows. Parameters: id (uuid). Example: {\"id\": \"00000000-0000-0000-0000-000000000001\"}.",
+  "version": 1,
+  "parameters": {
+    "type": "object",
+    "required": ["id"],
+    "properties": {
+      "id": { "type": "string", "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$" }
+    }
+  },
+  "annotations": { "readOnlyHint": true, "idempotentHint": true },
+  "maxRows": 1,
+  "maxBytes": 262144,
+  "timeoutMs": 5000,
+  "pagination": "none"
+}

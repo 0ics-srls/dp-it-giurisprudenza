@@ -1,0 +1,10 @@
+{
+  "tool": "cassazione_sentenza",
+  "params": {
+    "ecli": "ECLI:IT:CASS:2021:33380"
+  },
+  "expect": {
+    "minRows": 0,
+    "maxRows": 5
+  }
+}

@@ -1,0 +1,337 @@
+{
+  "$schema": "https://schemas.dataplatform.0ics.ai/dataplatform/1.json",
+  "name": "it-giurisprudenza",
+  "version": "0.2.1",
+  "hostApi": "1",
+  "sources": [
+    {
+      "title": "Corte costituzionale - open data (pronunce, massime, norme impugnate)",
+      "path": "https://dati.cortecostituzionale.it/",
+      "licenses": [
+        {
+          "name": "CC-BY-SA-3.0",
+          "title": "Creative Commons Attribution-ShareAlike 3.0 (stated by the Corte costituzionale on its open data page)",
+          "path": "https://dati.cortecostituzionale.it/"
+        }
+      ]
+    },
+    {
+      "title": "Corte di cassazione - ItalGiure SentenzeWeb (CED)",
+      "path": "https://www.italgiure.giustizia.it/",
+      "licenses": [
+        {
+          "name": "no-open-licence-internal-use",
+          "title": "Not open data: rights of the Court and CED rules forbid mass redistribution; extremes, snippet and source link only",
+          "path": "https://www.italgiure.giustizia.it/"
+        }
+      ]
+    },
+    {
+      "title": "Corti di giustizia tributaria - MEF DocTrib giurisprudenza",
+      "path": "https://def.finanze.it/",
+      "licenses": [
+        {
+          "name": "source-terms-not-published",
+          "title": "No machine-readable licence published by MEF/CeRDEF; extremes, anonymized snippet and source link only",
+          "path": "https://def.finanze.it/"
+        }
+      ]
+    }
+  ],
+  "sourceTypes": [
+    {
+      "key": "cc-opendata",
+      "title": "Corte costituzionale open data dumps",
+      "configSchema": {
+        "type": "object",
+        "properties": {
+          "bundles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "pronunce_1956_1980", "pronunce_1981_2000", "pronunce_2001_oggi",
+                "massime_1956_1980", "massime_1981_2000", "massime_2001_oggi",
+                "norme_ordinanze", "norme_ricorsi", "norme_conflitti_enti", "norme_conflitti_poteri"
+              ]
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "anni": { "type": "array", "items": { "type": "integer", "minimum": 1956, "maximum": 2100 }, "description": "Keep only decisions of these years (sample filter)" },
+          "only": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "anno": { "type": "integer", "minimum": 1956, "maximum": 2100 },
+                "numero": { "type": "integer", "minimum": 1 }
+              },
+              "required": ["anno", "numero"],
+              "additionalProperties": false
+            },
+            "description": "Keep only these decisions (sample filter)"
+          },
+          "refreshToken": { "type": "string" },
+          "tokenBudget": { "type": "integer", "minimum": 0, "default": 30000, "description": "Hard stop of Jina tokens per embedding Run" },
+          "dryRun": { "type": "boolean", "default": false, "description": "Embedding step plans only: no Jina call, nothing written" }
+        },
+        "required": ["bundles"]
+      },
+      "x-ui": {
+        "order": ["bundles", "anni", "only", "refreshToken", "tokenBudget", "dryRun"],
+        "labels": { "bundles": "Dumps", "anni": "Years", "only": "Only these decisions", "refreshToken": "Refresh token", "tokenBudget": "Embedding token budget", "dryRun": "Embedding dry run" },
+        "help": {
+          "bundles": "Open data dumps to load: pronunce, massime, or the norme impugnate registries",
+          "anni": "Sample filter: keep only decisions of these years (the dump is still downloaded whole)",
+          "only": "Sample filter: keep only these decisions (anno, numero)",
+          "refreshToken": "Change this value to load all dumps again",
+          "tokenBudget": "Maximum Jina tokens one Run may spend on embeddings (default 30000)",
+          "dryRun": "Plan the embeddings without calling Jina"
+        }
+      }
+    },
+    {
+      "key": "cassazione-solr",
+      "title": "Corte di cassazione sentences (ItalGiure Solr)",
+      "configSchema": {
+        "type": "object",
+        "properties": {
+          "kind": { "type": "string", "enum": ["snciv", "snpen"], "description": "Civil or criminal sentences" },
+          "anno": { "type": "integer", "minimum": 2021, "maximum": 2100 },
+          "mese": { "type": "integer", "minimum": 1, "maximum": 13, "description": "Month 1-12 of the decision date, 13 = residual partition; empty = all" },
+          "maxDocs": { "type": "integer", "minimum": 1, "description": "Sample filter: stop after this many sentences" },
+          "solrBaseUrl": { "type": "string", "default": "https://www.italgiure.giustizia.it", "description": "Base URL of the ItalGiure host (replay server in tests)" },
+          "verifyTls": { "type": "boolean", "default": true },
+          "refreshToken": { "type": "string" },
+          "tokenBudget": { "type": "integer", "minimum": 0, "default": 30000, "description": "Hard stop of Jina tokens per embedding Run" },
+          "dryRun": { "type": "boolean", "default": false, "description": "Embedding step plans only: no Jina call, nothing written" }
+        },
+        "required": ["kind", "anno"]
+      },
+      "x-ui": {
+        "order": ["kind", "anno", "mese", "maxDocs", "solrBaseUrl", "verifyTls", "refreshToken", "tokenBudget", "dryRun"],
+        "labels": { "kind": "Kind", "anno": "Year", "mese": "Month", "maxDocs": "Max sentences", "solrBaseUrl": "ItalGiure base URL", "verifyTls": "Verify TLS", "refreshToken": "Refresh token", "tokenBudget": "Embedding token budget", "dryRun": "Embedding dry run" },
+        "help": {
+          "kind": "snciv = civil, snpen = criminal",
+          "anno": "Deposit year (Solr field anno); full text exists from 2021",
+          "mese": "Month of the decision date; 13 = decisions outside the year (residual); empty = all partitions",
+          "maxDocs": "Sample filter for the live proof",
+          "solrBaseUrl": "Only change for a replay server; must stay on the allowed hosts otherwise",
+          "verifyTls": "Switch off only when the government certificate chain cannot be verified",
+          "refreshToken": "Change this value to fetch all partitions again",
+          "tokenBudget": "Maximum Jina tokens one Run may spend on embeddings (default 30000)",
+          "dryRun": "Plan the embeddings without calling Jina"
+        }
+      }
+    },
+    {
+      "key": "cgt-doctrib",
+      "title": "Corti di giustizia tributaria decisions (MEF DocTrib)",
+      "configSchema": {
+        "type": "object",
+        "properties": {
+          "from": { "type": "string", "format": "date", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
+          "to": { "type": "string", "format": "date", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
+          "maxItems": { "type": "integer", "minimum": 1, "description": "Sample filter: stop after this many decisions" },
+          "verifyTls": { "type": "boolean", "default": true },
+          "refreshToken": { "type": "string" },
+          "tokenBudget": { "type": "integer", "minimum": 0, "default": 30000, "description": "Hard stop of Jina tokens per embedding Run" },
+          "dryRun": { "type": "boolean", "default": false, "description": "Embedding step plans only: no Jina call, nothing written" }
+        },
+        "required": ["from", "to"]
+      },
+      "x-ui": {
+        "order": ["from", "to", "maxItems", "verifyTls", "refreshToken", "tokenBudget", "dryRun"],
+        "labels": { "from": "From", "to": "To", "maxItems": "Max decisions", "verifyTls": "Verify TLS", "refreshToken": "Refresh token", "tokenBudget": "Embedding token budget", "dryRun": "Embedding dry run" },
+        "help": {
+          "from": "First day of the emission date window (YYYY-MM-DD)",
+          "to": "Last day of the emission date window (YYYY-MM-DD)",
+          "maxItems": "Sample filter for the live proof",
+          "verifyTls": "Switch off only when the MEF certificate chain cannot be verified",
+          "refreshToken": "Change this value to fetch all windows again",
+          "tokenBudget": "Maximum Jina tokens one Run may spend on embeddings (default 30000)",
+          "dryRun": "Plan the embeddings without calling Jina"
+        }
+      }
+    }
+  ],
+  "pipeline": [
+    {
+      "step": "detect",
+      "class": "git:github.com/0ics-srls/dp-it-giurisprudenza-detect@v0.1.1",
+      "params": {
+        "kind": "${source.config.kind}",
+        "bundles": "${source.config.bundles}",
+        "anni": "${source.config.anni}",
+        "only": "${source.config.only}",
+        "anno": "${source.config.anno}",
+        "mese": "${source.config.mese}",
+        "from": "${source.config.from}",
+        "to": "${source.config.to}",
+        "state": "${source.state}",
+        "refreshToken": "${source.config.refreshToken}"
+      },
+      "emits": "catalog",
+      "retry": { "type": "exponential", "maxAttempts": 3, "interval": "PT5M" },
+      "timeout": "PT10M"
+    },
+    {
+      "step": "grab",
+      "class": "git:github.com/0ics-srls/dp-it-giurisprudenza-grab@v0.1.1",
+      "perItem": true,
+      "chunkSize": 1,
+      "concurrencyLimit": 1,
+      "params": {
+        "items": "${items}",
+        "dir": "${dataRoot}/dp-it-giurisprudenza/${source.id}/raw",
+        "solrBaseUrl": "${source.config.solrBaseUrl}",
+        "verifyTls": "${source.config.verifyTls}",
+        "maxDocs": "${source.config.maxDocs}",
+        "maxItems": "${source.config.maxItems}"
+      },
+      "retry": { "type": "exponential", "maxAttempts": 3, "interval": "PT5M" },
+      "timeout": "PT2H",
+      "allowedHosts": ["dati.cortecostituzionale.it", "www.italgiure.giustizia.it", "def.finanze.it"]
+    },
+    {
+      "step": "convert",
+      "class": "git:github.com/0ics-srls/dp-it-giurisprudenza-convert@v0.1.0",
+      "perItem": true,
+      "chunkSize": 1,
+      "params": {
+        "items": "${items}",
+        "dirIn": "${dataRoot}/dp-it-giurisprudenza/${source.id}/raw",
+        "dirOut": "${dataRoot}/dp-it-giurisprudenza/${source.id}/plan",
+        "anni": "${source.config.anni}",
+        "only": "${source.config.only}",
+        "maxDocs": "${source.config.maxDocs}",
+        "maxItems": "${source.config.maxItems}"
+      },
+      "timeout": "PT2H"
+    },
+    {
+      "step": "anonymize",
+      "class": "git:github.com/0ics-srls/dp-it-giurisprudenza-anonymize@v0.1.0",
+      "perItem": true,
+      "chunkSize": 1,
+      "params": {
+        "items": "${items}",
+        "dirIn": "${dataRoot}/dp-it-giurisprudenza/${source.id}/plan",
+        "dirOut": "${dataRoot}/dp-it-giurisprudenza/${source.id}/anon"
+      },
+      "resources": { "maxMemoryMbytes": 8192, "cpuLimit": 4 },
+      "timeout": "PT6H",
+      "heartbeatMaxSeconds": 1800
+    },
+    {
+      "step": "ingest",
+      "class": "git:github.com/0ics-srls/dp-it-giurisprudenza-ingest@v0.1.0",
+      "perItem": true,
+      "chunkSize": 1,
+      "db": "dataset",
+      "params": {
+        "items": "${items}",
+        "dirIn": "${dataRoot}/dp-it-giurisprudenza/${source.id}/anon",
+        "connString": "${dataset.connString}",
+        "schema": "ds_it_giurisprudenza"
+      },
+      "timeout": "PT1H",
+      "produces": [
+        "ds_it_giurisprudenza.pronunce",
+        "ds_it_giurisprudenza.massime",
+        "ds_it_giurisprudenza.norme_impugnate",
+        "ds_it_giurisprudenza.cassazione_sentenze",
+        "ds_it_giurisprudenza.cgt_sentenze",
+        "ds_it_giurisprudenza.passages",
+        "ds_it_giurisprudenza.cgt_skipped"
+      ]
+    },
+    {
+      "step": "embed",
+      "class": "git:github.com/0ics-srls/dp-lex-embed@dp-p7.1",
+      "perItem": true,
+      "chunkSize": 1,
+      "concurrencyLimit": 1,
+      "db": "dataset",
+      "secrets": ["JINA_API_KEY"],
+      "params": {
+        "items": "${items}",
+        "connString": "${dataset.connString}",
+        "table": "ds_it_giurisprudenza.passages",
+        "keyColumn": "id",
+        "textColumns": ["text_contextual"],
+        "vectorColumn": "embedding",
+        "tokenBudget": "${source.config.tokenBudget}",
+        "dryRun": "${source.config.dryRun}",
+        "jinaApiKey": "${secret.JINA_API_KEY}"
+      },
+      "retry": { "type": "exponential", "maxAttempts": 3, "interval": "PT2M" },
+      "timeout": "PT30M",
+      "heartbeatMaxSeconds": 600,
+      "produces": ["ds_it_giurisprudenza.passages"]
+    }
+  ],
+  "catalog": { "noveltyKey": "itemId|version", "retryFailed": "newUrlOnly" },
+  "ui": {
+    "hostUiApi": "1",
+    "entry": "ui/dist/main.js",
+    "styles": ["ui/dist/styles.css"],
+    "menu": {
+      "label": { "sk": "Judikatúra Taliansko", "en": "Italian case law", "it": "Giurisprudenza italiana" },
+      "icon": "pi pi-bookmark",
+      "order": 120
+    },
+    "screens": [
+      {
+        "id": "corpus",
+        "element": "dp-it-giurisprudenza-corpus",
+        "label": { "sk": "Judikatúra", "en": "Case law", "it": "Giurisprudenza" },
+        "icon": "pi pi-list",
+        "default": true
+      },
+      {
+        "id": "decision",
+        "element": "dp-it-giurisprudenza-decision",
+        "label": { "sk": "Detail rozhodnutia", "en": "Decision detail", "it": "Dettaglio decisione" },
+        "icon": "pi pi-file"
+      },
+      {
+        "id": "status",
+        "element": "dp-it-giurisprudenza-status",
+        "label": { "sk": "Stav načítania", "en": "Ingest status", "it": "Stato dell'ingestione" },
+        "icon": "pi pi-chart-bar"
+      }
+    ],
+    "permissions": [
+      "tools:pronunce_list",
+      "tools:search",
+      "tools:pronuncia",
+      "tools:massime",
+      "tools:sentenze_su_norma",
+      "tools:cassazione_search",
+      "tools:cassazione_sentenza",
+      "tools:cgt_search",
+      "tools:cgt_pronuncia",
+      "tools:status",
+      "navigate"
+    ]
+  },
+  "releases": {
+    "breakingChanges": {
+      "0.2.1": {
+        "message": "cassazione_search and cgt_search accept a call without query and filters and list the newest decisions (the Cassazione and Tributaria tabs of the Screens need it); no column or table is changed",
+        "scopedImpact": "it-giurisprudenza Tools cassazione_search, cgt_search"
+      },
+      "0.2.0": {
+        "message": "Screens added: case law list with three tabs (Costituzionale, Cassazione, Tributaria), decision detail and ingest status (Console menu Italian case law); no Tool, column or table is changed",
+        "scopedImpact": "it-giurisprudenza UI"
+      },
+      "0.1.0": {
+        "message": "Initial release with the three corpora: Corte costituzionale open data (pronunce, massime, norme impugnate), Cassazione civil and criminal sentences and CGT decisions (detect, grab, convert, anonymize, ingest, embed), schema ds_it_giurisprudenza (7 tables), 11 Tools; no Screens yet",
+        "scopedImpact": "new package"
+      }
+    }
+  },
+  "dataset": { "schema": "ds_it_giurisprudenza", "migrations": "schema/migrations", "contract": "serving/dataset.odcs.yaml" }
+}
