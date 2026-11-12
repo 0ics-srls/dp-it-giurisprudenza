@@ -65,6 +65,10 @@ The Screens call only the ten Tools of their permissions (`pronunce_list`, `sear
 
 Corte costituzionale data is open (CC BY-SA 3.0): attribute the source; derivatives stay CC BY-SA. Cassazione and CGT are not open data: the Tools return the extremes, a highlight or a passage of at most 1500 characters, and the source link, never the full text. The rule is data, not convention: the columns `text_raw_original`, `text_anon`, `ocr_dis_anon` and the passage texts carry the ODCS `largeValue` flag, so the Host generated Tools cannot return them, and `DpItGiurisprudenzaPostureTests` fails if a Tool SQL reads `text_raw_original`, selects `text_anon` or passage text uncapped, or if any output exceeds the cap. The Manifest licences keep a public Grant blocked until the ItalGiure (CED) and MEF DocTrib terms are confirmed.
 
+## TLS of the sources
+
+`verifyTls` stays true (the default) for every Source type. `def.finanze.it` (DocTrib) sends only its leaf certificate; the grab class `dp-it-giurisprudenza-grab@v0.1.2` pins the missing Sectigo intermediate (`Sectigo Public Server Authentication CA OV R36`, file and SHA-256 fingerprint documented in the class repo `src/dp_it_giurisprudenza_grab/certs/README.md`) next to the certifi roots, so no exception is needed. `verifyTls false` remains a documented escape for a replay or test server only.
+
 ## Schema
 
 `ds_it_giurisprudenza` (7 tables, migrations `0001_init.sql`, `0002_search.sql`): `pronunce`, `massime`, `norme_impugnate`, `cassazione_sentenze`, `cgt_sentenze`, `passages` (every embeddable piece of every corpus, `vector(1024)` with an HNSW cosine index), `cgt_skipped` (documents without text at the source, counted by `status`). The contract `serving/dataset.odcs.yaml` has `references` from `norma_urn` and `norma_act_urn` to the `it-normativa` units; the link stays metadata, no Tool reads another package.
