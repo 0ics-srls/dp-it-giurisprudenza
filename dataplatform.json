@@ -1,7 +1,7 @@
 {
   "$schema": "https://schemas.dataplatform.0ics.ai/dataplatform/1.json",
   "name": "it-giurisprudenza",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "hostApi": "1",
   "sources": [
     {
@@ -319,6 +319,10 @@
   },
   "releases": {
     "breakingChanges": {
+      "0.2.1": {
+        "message": "cassazione_search and cgt_search accept a call without query and filters and list the newest decisions (the Cassazione and Tributaria tabs of the Screens need it); no column or table is changed",
+        "scopedImpact": "it-giurisprudenza Tools cassazione_search, cgt_search"
+      },
       "0.2.0": {
         "message": "Screens added: case law list with three tabs (Costituzionale, Cassazione, Tributaria), decision detail and ingest status (Console menu Italian case law); no Tool, column or table is changed",
         "scopedImpact": "it-giurisprudenza UI"

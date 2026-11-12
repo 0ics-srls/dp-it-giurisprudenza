@@ -1,5 +1,5 @@
 {
-  "description": "Search the Corte di cassazione sentences (civil snciv and criminal snpen, 2021 onwards, ItalGiure). Hybrid mode fuses full-text (italian) and vector ranking with reciprocal rank fusion. LEGAL POSTURE: the full text is never returned; each hit gives the extremes (source_id, ecli, kind, sezione, anno, num_dec, data_decisione, materia, tipo_prov), a short highlight or passage (headline, snippet, at most 1500 characters) and the source_url to read the sentence at ItalGiure. An ecli is not unique (civil and criminal sentences can share one): source_id identifies a sentence. Parameters: query (web-search syntax), k (1..50, default 20), mode (hybrid, lexical, semantic), filters kind (snciv, snpen), anno_from and anno_to (deposit year; anno_from must not exceed anno_to), sezione and materia (exact, case-sensitive). At least a query or one filter is required; filters alone list the newest decisions first. Example: {\"query\": \"recesso giusta causa\", \"kind\": \"snciv\", \"anno_from\": 2023}.",
+  "description": "Search the Corte di cassazione sentences (civil snciv and criminal snpen, 2021 onwards, ItalGiure). Hybrid mode fuses full-text (italian) and vector ranking with reciprocal rank fusion. LEGAL POSTURE: the full text is never returned; each hit gives the extremes (source_id, ecli, kind, sezione, anno, num_dec, data_decisione, materia, tipo_prov), a short highlight or passage (headline, snippet, at most 1500 characters) and the source_url to read the sentence at ItalGiure. An ecli is not unique (civil and criminal sentences can share one): source_id identifies a sentence. Parameters: query (web-search syntax), k (1..50, default 20), mode (hybrid, lexical, semantic), filters kind (snciv, snpen), anno_from and anno_to (deposit year; anno_from must not exceed anno_to), sezione and materia (exact, case-sensitive). With no query the newest decisions are listed first (filters narrow the list; a call without any parameter lists the newest). Example: {\"query\": \"recesso giusta causa\", \"kind\": \"snciv\", \"anno_from\": 2023}.",
   "version": 1,
   "parameters": {
     "type": "object",
@@ -16,15 +16,7 @@
       "anno_to": { "type": "integer" },
       "sezione": { "type": "string", "maxLength": 50 },
       "materia": { "type": "string", "maxLength": 200 }
-    },
-    "anyOf": [
-      { "required": ["query"] },
-      { "required": ["kind"] },
-      { "required": ["anno_from"] },
-      { "required": ["anno_to"] },
-      { "required": ["sezione"] },
-      { "required": ["materia"] }
-    ]
+    }
   },
   "annotations": { "readOnlyHint": true, "idempotentHint": true },
   "maxRows": 50,
