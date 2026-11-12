@@ -78,7 +78,59 @@
     }
   },
   "decision": {
-    "title": "Decision"
+    "title": "Decision",
+    "missing": "Open a decision from the list to see its detail.",
+    "back": "Back to the case law",
+    "notFound": "Decision not found.",
+    "openSource": "Open on the Court site",
+    "attribution": "Corte costituzionale, dati.cortecostituzionale.it, CC BY-SA 3.0",
+    "header": {
+      "ecli": "ECLI",
+      "kind": "Kind",
+      "number": "Number",
+      "deposit": "Deposited",
+      "decided": "Decided",
+      "presidente": "President",
+      "relatore": "Rapporteur",
+      "redattore": "Drafter",
+      "collegio": "Panel"
+    },
+    "sections": {
+      "epigrafe": "Epigraph",
+      "fatto": "Facts",
+      "diritto": "Law",
+      "testo": "Text",
+      "dispositivo": "Operative part"
+    },
+    "collapse": "Hide",
+    "expand": "Show",
+    "massime": {
+      "heading": "Massime",
+      "empty": "No massime for this decision.",
+      "number": "No. {{n}}",
+      "error": "The massime could not be loaded."
+    },
+    "norma": {
+      "heading": "Cases challenging a norm",
+      "help": "Type a URN:NIR (act or article level) to list the registry rows of the norms under challenge.",
+      "label": "Norm URN",
+      "placeholder": "urn:nir:stato:legge:2022-12-29;197~art1",
+      "submit": "Search",
+      "invalid": "Enter a URN starting with urn:nir: (for example urn:nir:stato:legge:2022-12-29;197~art1).",
+      "empty": "No registry rows match this norm.",
+      "note": "The registries list pending cases, and a decision is linked only through the registry number quoted in its epigraph: absence of results is not proof that no decision exists.",
+      "resolved": "Resolved: {{count}}",
+      "unresolved": "Registry rows without a decision: {{count}}",
+      "stateResolved": "Resolved",
+      "stateUnresolved": "Unresolved",
+      "pending": "pending",
+      "registro": "Registry {{tipo}} {{numero}}/{{anno}}",
+      "open": "Open the decision"
+    },
+    "detail": {
+      "notice": "Only the extremes, an excerpt and the link to the official source are shown, never the full text: read the full text at the official source.",
+      "snippet": "Excerpt"
+    }
   },
   "status": {
     "title": "Ingest status"

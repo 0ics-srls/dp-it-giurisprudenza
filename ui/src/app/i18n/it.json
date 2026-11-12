@@ -78,7 +78,59 @@
     }
   },
   "decision": {
-    "title": "Decisione"
+    "title": "Decisione",
+    "missing": "Aprire una decisione dall'elenco per vederne il dettaglio.",
+    "back": "Torna alla giurisprudenza",
+    "notFound": "Decisione non trovata.",
+    "openSource": "Apri sul sito della Corte",
+    "attribution": "Corte costituzionale, dati.cortecostituzionale.it, CC BY-SA 3.0",
+    "header": {
+      "ecli": "ECLI",
+      "kind": "Tipologia",
+      "number": "Numero",
+      "deposit": "Deposito",
+      "decided": "Decisione",
+      "presidente": "Presidente",
+      "relatore": "Relatore",
+      "redattore": "Redattore",
+      "collegio": "Collegio"
+    },
+    "sections": {
+      "epigrafe": "Epigrafe",
+      "fatto": "Fatto",
+      "diritto": "Diritto",
+      "testo": "Testo",
+      "dispositivo": "Dispositivo"
+    },
+    "collapse": "Nascondi",
+    "expand": "Mostra",
+    "massime": {
+      "heading": "Massime",
+      "empty": "Nessuna massima per questa decisione.",
+      "number": "n. {{n}}",
+      "error": "Impossibile caricare le massime."
+    },
+    "norma": {
+      "heading": "Giudizi su una norma",
+      "help": "Inserire un URN:NIR (atto o articolo) per elencare le righe dei registri delle norme impugnate.",
+      "label": "URN della norma",
+      "placeholder": "urn:nir:stato:legge:2022-12-29;197~art1",
+      "submit": "Cerca",
+      "invalid": "Inserire un URN che inizi con urn:nir: (ad esempio urn:nir:stato:legge:2022-12-29;197~art1).",
+      "empty": "Nessuna riga dei registri corrisponde a questa norma.",
+      "note": "I registri elencano cause pendenti e una decisione è collegata solo tramite il numero di registro citato nell'epigrafe: l'assenza di risultati non è prova che non esistano pronunce.",
+      "resolved": "Collegate: {{count}}",
+      "unresolved": "Righe di registro senza decisione: {{count}}",
+      "stateResolved": "Collegata",
+      "stateUnresolved": "Non collegata",
+      "pending": "pendente",
+      "registro": "Registro {{tipo}} {{numero}}/{{anno}}",
+      "open": "Apri la decisione"
+    },
+    "detail": {
+      "notice": "Si mostrano solo gli estremi, un estratto e il link alla fonte ufficiale, mai il testo integrale: il testo integrale si legge alla fonte ufficiale.",
+      "snippet": "Estratto"
+    }
   },
   "status": {
     "title": "Stato dell'ingestione"

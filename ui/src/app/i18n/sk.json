@@ -78,7 +78,59 @@
     }
   },
   "decision": {
-    "title": "Rozhodnutie"
+    "title": "Rozhodnutie",
+    "missing": "Otvorte rozhodnutie zo zoznamu, aby ste videli jeho detail.",
+    "back": "Späť na judikatúru",
+    "notFound": "Rozhodnutie sa nenašlo.",
+    "openSource": "Otvoriť na stránke súdu",
+    "attribution": "Corte costituzionale, dati.cortecostituzionale.it, CC BY-SA 3.0",
+    "header": {
+      "ecli": "ECLI",
+      "kind": "Druh",
+      "number": "Číslo",
+      "deposit": "Zverejnené",
+      "decided": "Rozhodnuté",
+      "presidente": "Predseda",
+      "relatore": "Spravodajca",
+      "redattore": "Redaktor",
+      "collegio": "Kolégium"
+    },
+    "sections": {
+      "epigrafe": "Záhlavie",
+      "fatto": "Skutkový stav",
+      "diritto": "Právne posúdenie",
+      "testo": "Text",
+      "dispositivo": "Výrok"
+    },
+    "collapse": "Skryť",
+    "expand": "Zobraziť",
+    "massime": {
+      "heading": "Právne vety",
+      "empty": "Toto rozhodnutie nemá právne vety.",
+      "number": "č. {{n}}",
+      "error": "Právne vety sa nepodarilo načítať."
+    },
+    "norma": {
+      "heading": "Konania napádajúce normu",
+      "help": "Zadajte URN:NIR (akt alebo článok) a zobrazia sa záznamy registrov napádaných noriem.",
+      "label": "URN normy",
+      "placeholder": "urn:nir:stato:legge:2022-12-29;197~art1",
+      "submit": "Hľadať",
+      "invalid": "Zadajte URN začínajúce urn:nir: (napr. urn:nir:stato:legge:2022-12-29;197~art1).",
+      "empty": "Tejto norme sa nezodpovedá žiadny záznam registra.",
+      "note": "Registre uvádzajú prebiehajúce konania a rozhodnutie sa prepája iba cez číslo registra z jeho záhlavia: neprítomnosť výsledkov nie je dôkazom, že rozhodnutie neexistuje.",
+      "resolved": "Priradené: {{count}}",
+      "unresolved": "Záznamy registra bez rozhodnutia: {{count}}",
+      "stateResolved": "Priradené",
+      "stateUnresolved": "Nepriradené",
+      "pending": "prebieha",
+      "registro": "Register {{tipo}} {{numero}}/{{anno}}",
+      "open": "Otvoriť rozhodnutie"
+    },
+    "detail": {
+      "notice": "Zobrazujú sa iba základné údaje, výťah a odkaz na oficiálny zdroj, nikdy nie úplný text: úplný text si prečítajte na oficiálnom zdroji.",
+      "snippet": "Výťah"
+    }
   },
   "status": {
     "title": "Stav načítania"
