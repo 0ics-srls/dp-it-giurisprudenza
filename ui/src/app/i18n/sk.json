@@ -1,0 +1,16 @@
+{
+  "common": {
+    "loading": "Načítavam...",
+    "error": "Údaje sa nepodarilo načítať.",
+    "retry": "Skúsiť znova"
+  },
+  "corpus": {
+    "title": "Judikatúra"
+  },
+  "decision": {
+    "title": "Rozhodnutie"
+  },
+  "status": {
+    "title": "Stav načítania"
+  }
+}

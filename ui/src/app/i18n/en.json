@@ -1,0 +1,16 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "The data could not be loaded.",
+    "retry": "Try again"
+  },
+  "corpus": {
+    "title": "Case law"
+  },
+  "decision": {
+    "title": "Decision"
+  },
+  "status": {
+    "title": "Ingest status"
+  }
+}

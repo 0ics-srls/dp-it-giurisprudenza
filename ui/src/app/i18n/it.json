@@ -1,0 +1,16 @@
+{
+  "common": {
+    "loading": "Caricamento...",
+    "error": "Impossibile caricare i dati.",
+    "retry": "Riprova"
+  },
+  "corpus": {
+    "title": "Giurisprudenza"
+  },
+  "decision": {
+    "title": "Decisione"
+  },
+  "status": {
+    "title": "Stato dell'ingestione"
+  }
+}
