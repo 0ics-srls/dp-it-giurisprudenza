@@ -1,7 +1,7 @@
 {
   "$schema": "https://schemas.dataplatform.0ics.ai/dataplatform/1.json",
   "name": "it-giurisprudenza",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "hostApi": "1",
   "sources": [
     {
@@ -319,6 +319,10 @@
   },
   "releases": {
     "breakingChanges": {
+      "0.2.3": {
+        "message": "The generated search Tools of pronunce, massime, cassazione_sentenze and cgt_sentenze declare ftsConfig italian (the stored vectors are italian) so body words are found; no curated Tool, column or table is changed",
+        "scopedImpact": "generated *_search Tools"
+      },
       "0.2.2": {
         "message": "The status Screen shows the corpus notes in the Console language (sk, it, en); the grab class pins the missing Sectigo intermediate certificate of def.finanze.it, so a CGT Source works with verifyTls true; no Tool, column or table is changed",
         "scopedImpact": "it-giurisprudenza status Screen, CGT Sources"
