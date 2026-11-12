@@ -1,0 +1,11 @@
+{
+  "tool": "cassazione_search",
+  "params": {
+    "query": "recesso",
+    "mode": "lexical"
+  },
+  "expect": {
+    "minRows": 0,
+    "maxRows": 50
+  }
+}
