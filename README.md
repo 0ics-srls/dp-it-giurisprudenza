@@ -1,6 +1,6 @@
 # dp-it-giurisprudenza
 
-Data Package `it-giurisprudenza` (phase 79, open-lex-it): Italian case law in three corpora, loaded by a six-step pipeline into the schema `ds_it_giurisprudenza` and served by 11 Tools. Version 0.1.0 has no Screens (they come with 0.2.0).
+Data Package `it-giurisprudenza` (phase 79, open-lex-it): Italian case law in three corpora, loaded by a six-step pipeline into the schema `ds_it_giurisprudenza` and served by 11 Tools. Version 0.2.0 adds three Console Screens (see Screens); 0.1.0 had none.
 
 | Corpus | Source | Licence name (Manifest) |
 |---|---|---|
@@ -48,6 +48,18 @@ A k above 50 is a 400 (k is 1..50); `mode` is hybrid, lexical or semantic. Witho
 - `sentenze_su_norma` keeps the legacy matching (the URN, the act, or any article of the act: `norma_articolo` narrows) and its honesty (`unresolved_registri`); new: decisions are linked through the registry number quoted in the epigrafe (the legacy never linked any). The registries are accumulative (rows are never deleted, `pending` marks the latest snapshot).
 - `anno_from` above `anno_to` (Cassazione, CGT) is a 400; `luogo`, `sezione` and `materia` are exact, case-sensitive matches as in the legacy.
 - `text_raw_original`, the non anonymized text, is stored and never returned by anything.
+
+## Screens (since 0.2.0)
+
+Angular custom elements served from the committed `ui/dist` (built with `npm ci && npm run build` in `ui/`, see `ui/BUILD-NOTES.md`); Console menu "Italian case law" (sk / it / en).
+
+| Screen | Element | Shows |
+|---|---|---|
+| `corpus` (default) | `dp-it-giurisprudenza-corpus` | three tabs: Costituzionale (search or paged list, filters kind and years), Cassazione (kind, years, section, subject), Tributaria (instance, place, years); extremes, excerpt and source link only for Cassazione and CGT |
+| `decision` | `dp-it-giurisprudenza-decision` | route key `cc~<ecli>`, `cass~<source_id or ecli>`, `cgt~<id>` (raw, never pre-encoded): CC full text with sections, massime and a norm box (`sentenze_su_norma`); Cassazione and CGT extremes, excerpt and link, never the full text |
+| `status` | `dp-it-giurisprudenza-status` | counts per corpus, embedding warning, honest limits and the licence footer |
+
+The Screens call only the ten Tools of their permissions (`pronunce_list`, `search`, `pronuncia`, `massime`, `sentenze_su_norma`, `cassazione_search`, `cassazione_sentenza`, `cgt_search`, `cgt_pronuncia`, `status`) and `navigate`. A year range without text is listed with `search` (up to 50, no paging); one year is paged with `pronunce_list`.
 
 ## Legal posture
 

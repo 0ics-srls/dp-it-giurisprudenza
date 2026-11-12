@@ -1,7 +1,7 @@
 {
   "$schema": "https://schemas.dataplatform.0ics.ai/dataplatform/1.json",
   "name": "it-giurisprudenza",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "hostApi": "1",
   "sources": [
     {
@@ -273,8 +273,56 @@
     }
   ],
   "catalog": { "noveltyKey": "itemId|version", "retryFailed": "newUrlOnly" },
+  "ui": {
+    "hostUiApi": "1",
+    "entry": "ui/dist/main.js",
+    "styles": ["ui/dist/styles.css"],
+    "menu": {
+      "label": { "sk": "Judikatúra Taliansko", "en": "Italian case law", "it": "Giurisprudenza italiana" },
+      "icon": "pi pi-bookmark",
+      "order": 120
+    },
+    "screens": [
+      {
+        "id": "corpus",
+        "element": "dp-it-giurisprudenza-corpus",
+        "label": { "sk": "Judikatúra", "en": "Case law", "it": "Giurisprudenza" },
+        "icon": "pi pi-list",
+        "default": true
+      },
+      {
+        "id": "decision",
+        "element": "dp-it-giurisprudenza-decision",
+        "label": { "sk": "Detail rozhodnutia", "en": "Decision detail", "it": "Dettaglio decisione" },
+        "icon": "pi pi-file"
+      },
+      {
+        "id": "status",
+        "element": "dp-it-giurisprudenza-status",
+        "label": { "sk": "Stav načítania", "en": "Ingest status", "it": "Stato dell'ingestione" },
+        "icon": "pi pi-chart-bar"
+      }
+    ],
+    "permissions": [
+      "tools:pronunce_list",
+      "tools:search",
+      "tools:pronuncia",
+      "tools:massime",
+      "tools:sentenze_su_norma",
+      "tools:cassazione_search",
+      "tools:cassazione_sentenza",
+      "tools:cgt_search",
+      "tools:cgt_pronuncia",
+      "tools:status",
+      "navigate"
+    ]
+  },
   "releases": {
     "breakingChanges": {
+      "0.2.0": {
+        "message": "Screens added: case law list with three tabs (Costituzionale, Cassazione, Tributaria), decision detail and ingest status (Console menu Italian case law); no Tool, column or table is changed",
+        "scopedImpact": "it-giurisprudenza UI"
+      },
       "0.1.0": {
         "message": "Initial release with the three corpora: Corte costituzionale open data (pronunce, massime, norme impugnate), Cassazione civil and criminal sentences and CGT decisions (detect, grab, convert, anonymize, ingest, embed), schema ds_it_giurisprudenza (7 tables), 11 Tools; no Screens yet",
         "scopedImpact": "new package"
