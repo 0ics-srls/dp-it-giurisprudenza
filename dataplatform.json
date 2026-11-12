@@ -156,5 +156,130 @@
       }
     }
   ],
+  "pipeline": [
+    {
+      "step": "detect",
+      "class": "git:github.com/0ics-srls/dp-it-giurisprudenza-detect@v0.1.1",
+      "params": {
+        "kind": "${source.config.kind}",
+        "bundles": "${source.config.bundles}",
+        "anni": "${source.config.anni}",
+        "only": "${source.config.only}",
+        "anno": "${source.config.anno}",
+        "mese": "${source.config.mese}",
+        "from": "${source.config.from}",
+        "to": "${source.config.to}",
+        "state": "${source.state}",
+        "refreshToken": "${source.config.refreshToken}"
+      },
+      "emits": "catalog",
+      "retry": { "type": "exponential", "maxAttempts": 3, "interval": "PT5M" },
+      "timeout": "PT10M"
+    },
+    {
+      "step": "grab",
+      "class": "git:github.com/0ics-srls/dp-it-giurisprudenza-grab@v0.1.1",
+      "perItem": true,
+      "chunkSize": 1,
+      "concurrencyLimit": 1,
+      "params": {
+        "items": "${items}",
+        "dir": "${dataRoot}/dp-it-giurisprudenza/${source.id}/raw",
+        "solrBaseUrl": "${source.config.solrBaseUrl}",
+        "verifyTls": "${source.config.verifyTls}",
+        "maxDocs": "${source.config.maxDocs}",
+        "maxItems": "${source.config.maxItems}"
+      },
+      "retry": { "type": "exponential", "maxAttempts": 3, "interval": "PT5M" },
+      "timeout": "PT2H",
+      "allowedHosts": ["dati.cortecostituzionale.it", "www.italgiure.giustizia.it", "def.finanze.it"]
+    },
+    {
+      "step": "convert",
+      "class": "git:github.com/0ics-srls/dp-it-giurisprudenza-convert@v0.1.0",
+      "perItem": true,
+      "chunkSize": 1,
+      "params": {
+        "items": "${items}",
+        "dirIn": "${dataRoot}/dp-it-giurisprudenza/${source.id}/raw",
+        "dirOut": "${dataRoot}/dp-it-giurisprudenza/${source.id}/plan",
+        "anni": "${source.config.anni}",
+        "only": "${source.config.only}",
+        "maxDocs": "${source.config.maxDocs}",
+        "maxItems": "${source.config.maxItems}"
+      },
+      "timeout": "PT2H"
+    },
+    {
+      "step": "anonymize",
+      "class": "git:github.com/0ics-srls/dp-it-giurisprudenza-anonymize@v0.1.0",
+      "perItem": true,
+      "chunkSize": 1,
+      "params": {
+        "items": "${items}",
+        "dirIn": "${dataRoot}/dp-it-giurisprudenza/${source.id}/plan",
+        "dirOut": "${dataRoot}/dp-it-giurisprudenza/${source.id}/anon"
+      },
+      "resources": { "maxMemoryMbytes": 8192, "cpuLimit": 4 },
+      "timeout": "PT6H",
+      "heartbeatMaxSeconds": 1800
+    },
+    {
+      "step": "ingest",
+      "class": "git:github.com/0ics-srls/dp-it-giurisprudenza-ingest@v0.1.0",
+      "perItem": true,
+      "chunkSize": 1,
+      "db": "dataset",
+      "params": {
+        "items": "${items}",
+        "dirIn": "${dataRoot}/dp-it-giurisprudenza/${source.id}/anon",
+        "connString": "${dataset.connString}",
+        "schema": "ds_it_giurisprudenza"
+      },
+      "timeout": "PT1H",
+      "produces": [
+        "ds_it_giurisprudenza.pronunce",
+        "ds_it_giurisprudenza.massime",
+        "ds_it_giurisprudenza.norme_impugnate",
+        "ds_it_giurisprudenza.cassazione_sentenze",
+        "ds_it_giurisprudenza.cgt_sentenze",
+        "ds_it_giurisprudenza.passages",
+        "ds_it_giurisprudenza.cgt_skipped"
+      ]
+    },
+    {
+      "step": "embed",
+      "class": "git:github.com/0ics-srls/dp-lex-embed@dp-p7.1",
+      "perItem": true,
+      "chunkSize": 1,
+      "concurrencyLimit": 1,
+      "db": "dataset",
+      "secrets": ["JINA_API_KEY"],
+      "params": {
+        "items": "${items}",
+        "connString": "${dataset.connString}",
+        "table": "ds_it_giurisprudenza.passages",
+        "keyColumn": "id",
+        "textColumns": ["text_contextual"],
+        "vectorColumn": "embedding",
+        "tokenBudget": "${source.config.tokenBudget}",
+        "dryRun": "${source.config.dryRun}",
+        "jinaApiKey": "${secret.JINA_API_KEY}"
+      },
+      "retry": { "type": "exponential", "maxAttempts": 3, "interval": "PT2M" },
+      "timeout": "PT30M",
+      "heartbeatMaxSeconds": 600,
+      "produces": ["ds_it_giurisprudenza.passages"]
+    }
+  ],
+  "catalog": { "noveltyKey": "itemId|version", "retryFailed": "newUrlOnly" },
+  "releases": {
+    "breakingChanges": {
+      "0.1.0": {
+        "message": "Initial release: Corte costituzionale open data (pronunce, massime, norme impugnate), Cassazione civil and criminal sentences and CGT decisions (detect, grab, convert, anonymize, ingest, embed), schema ds_it_giurisprudenza (7 tables); no Tools or Screens yet",
+        "scopedImpact": "new package"
+      }
+    }
+  },
   "dataset": { "schema": "ds_it_giurisprudenza", "migrations": "schema/migrations", "contract": "serving/dataset.odcs.yaml" }
 }
