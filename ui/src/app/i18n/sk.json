@@ -153,6 +153,11 @@
     "warningHint": "Pasáže bez vektora sa sémantickým hľadaním nenájdu, kým nebeží krok embeddingu.",
     "norme": "Záznamy registra: prebiehajúce {{pending}}, s rozhodnutím {{resolved}}, bez rozhodnutia {{unresolved}}",
     "skipped": "Dokumenty bez textu na zdroji (nevyhľadateľné): {{count}}",
+    "notes": {
+      "cc": "Ústavný súd, otvorené dáta CC BY-SA 3.0, úplný text. Registre napadnutých ustanovení obsahujú prebiehajúce konania: rozhodnutie sa prepája cez číslo registra uvedené v jeho úvode a chýbajúce výsledky nedokazujú, že rozhodnutia neexistujú.",
+      "cassazione": "Kasačný súd (ItalGiure): iba od roku 2021, občianske a trestné veci. Nikdy úplný text: základné údaje, výťah a odkaz na zdroj. ECLI nie je identita: používa sa source_id.",
+      "cgt": "Daňové súdy (MEF DocTrib), iba po reforme. Nikdy úplný text: základné údaje, výťah a odkaz na zdroj. Dokumenty bez textu na zdroji sa nedajú vyhľadávať (skipped_without_text)."
+    },
     "footer": {
       "cc": "Corte costituzionale: dati.cortecostituzionale.it, CC BY-SA 3.0 (povinné uvedenie autora, rovnaké podmienky šírenia).",
       "others": "Kasačný súd (ItalGiure) a daňové súdy (MEF DocTrib): interné použitie, bez ďalšieho šírenia; zobrazujú sa iba základné údaje, výťah a odkaz na zdroj."

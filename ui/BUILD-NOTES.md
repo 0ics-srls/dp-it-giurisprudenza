@@ -6,8 +6,8 @@ Recorded for the 0.2.0 release (open-lex-it plan-c, blocks 25-29). The Host neve
 |---|---|
 | Command | `npm ci && npm run build` |
 | SDK | `@olx/package-ui-sdk` 0.2.2 from `vendor/olx-package-ui-sdk-0.2.2.tgz` (built from tag `v0.2.2` of `0ics-srls/package-ui-sdk`, see below) |
-| `du -sb dist` | 494708 bytes (limit `PackageUi:MaxBytes` 5 MB) |
-| `main.js` | 451502 bytes (limit per file 1.5 MB) |
+| `du -sb dist` | 497108 bytes (0.2.2) (limit `PackageUi:MaxBytes` 5 MB) |
+| `main.js` | 453902 bytes (0.2.2) (limit per file 1.5 MB) |
 | chunks | none (single bundle, no lazy chunks) |
 | `styles.css` | 0 bytes (the package relies on the Host PrimeNG theme) |
 | `3rdpartylicenses.txt` | 43188 bytes |

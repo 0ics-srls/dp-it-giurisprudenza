@@ -12,4 +12,9 @@ import { StatusStore } from './status.store';
 })
 export class StatusViewComponent {
   protected readonly store = inject(StatusStore);
+
+  /** The package text of the corpus note (Console language); null for a corpus it does not know, then the Tool note is shown. */
+  protected noteKey(corpus: string): string | null {
+    return corpus === 'cc' || corpus === 'cassazione' || corpus === 'cgt' ? `status.notes.${corpus}` : null;
+  }
 }

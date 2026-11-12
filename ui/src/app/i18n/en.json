@@ -153,6 +153,11 @@
     "warningHint": "Passages without a vector are not found by the semantic search until the embedding step runs.",
     "norme": "Registry rows: pending {{pending}}, with a decision {{resolved}}, without a decision {{unresolved}}",
     "skipped": "Documents without text at the source (not searchable): {{count}}",
+    "notes": {
+      "cc": "Constitutional Court, open data CC BY-SA 3.0, full text. The registers of challenged provisions list pending cases: a decision is linked through the register number cited in its preamble, and the absence of results does not prove that no rulings exist.",
+      "cassazione": "Court of Cassation (ItalGiure): only from 2021, civil and criminal. Never the full text: extremes, excerpt and link to the source. The ECLI is not an identity: use source_id.",
+      "cgt": "Tax justice courts (MEF DocTrib), only after the reform. Never the full text: extremes, excerpt and link to the source. Documents without text at the source cannot be searched (skipped_without_text)."
+    },
     "footer": {
       "cc": "Corte costituzionale: dati.cortecostituzionale.it, CC BY-SA 3.0 (attribution required, share-alike).",
       "others": "Cassazione (ItalGiure) and tax courts (MEF DocTrib): internal use, no redistribution; only the extremes, an excerpt and the link to the source are shown."

@@ -153,6 +153,11 @@
     "warningHint": "I passaggi senza vettore non sono trovati dalla ricerca semantica finché non gira il passo di embedding.",
     "norme": "Righe di registro: pendenti {{pending}}, con decisione {{resolved}}, senza decisione {{unresolved}}",
     "skipped": "Documenti senza testo alla fonte (non ricercabili): {{count}}",
+    "notes": {
+      "cc": "Corte costituzionale, open data CC BY-SA 3.0, testo integrale. I registri delle norme impugnate elencano cause pendenti: il collegamento a una decisione passa dal numero di registro citato nell'epigrafe e l'assenza di risultati non prova che non esistano pronunce.",
+      "cassazione": "Corte di cassazione (ItalGiure): solo dal 2021, civile e penale. Mai il testo integrale: estremi, estratto e link alla fonte. L'ECLI non è un'identità: usare source_id.",
+      "cgt": "Corti di giustizia tributaria (MEF DocTrib), solo dopo la riforma. Mai il testo integrale: estremi, estratto e link alla fonte. I documenti senza testo alla fonte non sono ricercabili (skipped_without_text)."
+    },
     "footer": {
       "cc": "Corte costituzionale: dati.cortecostituzionale.it, CC BY-SA 3.0 (attribuzione richiesta, condivisione allo stesso modo).",
       "others": "Cassazione (ItalGiure) e giustizia tributaria (MEF DocTrib): uso interno, nessuna ridistribuzione; si mostrano solo gli estremi, un estratto e il link alla fonte."

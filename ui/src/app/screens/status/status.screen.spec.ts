@@ -55,12 +55,55 @@ describe('StatusScreen', () => {
     expect(items[0]?.textContent).toContain('Constitutional Court');
     expect(items[0]?.textContent).toContain('120');
     expect(items[0]?.textContent).toContain('300');
-    expect(items[0]?.textContent).toContain('Nota della Corte costituzionale.');
+    expect(items[0]?.textContent).toContain('Constitutional Court, open data CC BY-SA 3.0');
     expect(items[1]?.textContent).toContain('Cassation');
     expect(items[1]?.textContent).toContain('2026-11-10');
-    expect(items[1]?.textContent).toContain('Solo dal 2021.');
+    expect(items[1]?.textContent).toContain('only from 2021');
     expect(items[2]?.textContent).toContain('Tax courts');
     expect(callsOf(env, 'status')).toEqual([{}]);
+  });
+
+  it('should show the English note of each corpus and not the Italian Tool text when the locale is en', async () => {
+    const { fixture } = setup(threeRows, 'en');
+    fixture.detectChanges();
+    await settle(fixture);
+    const [cc, cass, cgt] = rows(fixture);
+    expect(cc?.querySelector('.note')?.textContent).toContain('Constitutional Court, open data CC BY-SA 3.0');
+    expect(cass?.querySelector('.note')?.textContent).toContain('only from 2021');
+    expect(cgt?.querySelector('.note')?.textContent).toContain('only after the reform');
+    for (const row of [cc, cass, cgt]) {
+      expect(row?.querySelector('.note')?.textContent).not.toMatch(/Nota della|Solo dal|Solo dopo/);
+    }
+  });
+
+  it('should show the Slovak note of each corpus and not the Italian Tool text when the locale is sk', async () => {
+    const { fixture } = setup(threeRows, 'sk');
+    fixture.detectChanges();
+    await settle(fixture);
+    const [cc, cass, cgt] = rows(fixture);
+    expect(cc?.querySelector('.note')?.textContent).toContain('Ústavný súd, otvorené dáta CC BY-SA 3.0');
+    expect(cass?.querySelector('.note')?.textContent).toContain('iba od roku 2021');
+    expect(cgt?.querySelector('.note')?.textContent).toContain('iba po reforme');
+    for (const row of [cc, cass, cgt]) {
+      expect(row?.querySelector('.note')?.textContent).not.toMatch(/Nota della|Solo dal|Solo dopo/);
+    }
+  });
+
+  it('should show the Italian note of each corpus when the locale is it', async () => {
+    const { fixture } = setup(threeRows, 'it');
+    fixture.detectChanges();
+    await settle(fixture);
+    const [cc, cass, cgt] = rows(fixture);
+    expect(cc?.querySelector('.note')?.textContent).toContain('Corte costituzionale, open data CC BY-SA 3.0');
+    expect(cass?.querySelector('.note')?.textContent).toContain('solo dal 2021');
+    expect(cgt?.querySelector('.note')?.textContent).toContain('solo dopo la riforma');
+  });
+
+  it('should fall back to the Tool note when the corpus is not one of the three', async () => {
+    const { fixture } = setup(() => [statusWire({ corpus: 'altro', note: 'Nota libera del Tool.' })], 'en');
+    fixture.detectChanges();
+    await settle(fixture);
+    expect(rows(fixture)[0]?.querySelector('.note')?.textContent).toContain('Nota libera del Tool.');
   });
 
   it('should show the registry counts on the cc row and the skipped count on the cgt row when they are present', async () => {

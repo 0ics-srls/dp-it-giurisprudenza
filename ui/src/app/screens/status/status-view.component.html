@@ -39,7 +39,11 @@
             </td>
             <td>{{ row.lastIngestedAt | date: 'yyyy-MM-dd HH:mm' : 'UTC' }}</td>
             <td class="note">
-              {{ row.note }}
+              @if (noteKey(row.corpus); as key) {
+                {{ key | transloco }}
+              } @else {
+                {{ row.note }}
+              }
               @if (row.normePending !== null) {
                 <div class="extra" data-testid="status-norme">
                   {{ 'status.norme' | transloco: { pending: row.normePending, resolved: row.normeResolved, unresolved: row.normeUnresolved } }}

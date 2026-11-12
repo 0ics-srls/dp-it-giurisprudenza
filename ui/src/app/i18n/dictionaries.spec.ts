@@ -18,6 +18,15 @@ describe('dictionaries', () => {
     expect(missing).toEqual([]);
   });
 
+  it('should have a status note for each corpus in sk, en and it when the dynamic key is built', () => {
+    for (const dict of [skDict, enDict, itDict]) {
+      const keys = flattenKeys(dict);
+      for (const corpus of ['cc', 'cassazione', 'cgt']) {
+        expect(keys).toContain(`status.notes.${corpus}`);
+      }
+    }
+  });
+
   it('should find template keys when scanning (no vacuous pass)', () => {
     expect(templateKeys(APP_ROOT).length).toBeGreaterThan(20);
   });
