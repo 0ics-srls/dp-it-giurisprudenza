@@ -276,7 +276,7 @@
   "releases": {
     "breakingChanges": {
       "0.1.0": {
-        "message": "Initial release: Corte costituzionale open data (pronunce, massime, norme impugnate), Cassazione civil and criminal sentences and CGT decisions (detect, grab, convert, anonymize, ingest, embed), schema ds_it_giurisprudenza (7 tables); no Tools or Screens yet",
+        "message": "Initial release with the three corpora: Corte costituzionale open data (pronunce, massime, norme impugnate), Cassazione civil and criminal sentences and CGT decisions (detect, grab, convert, anonymize, ingest, embed), schema ds_it_giurisprudenza (7 tables), 11 Tools; no Screens yet",
         "scopedImpact": "new package"
       }
     }
