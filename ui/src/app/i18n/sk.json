@@ -2,10 +2,80 @@
   "common": {
     "loading": "Načítavam...",
     "error": "Údaje sa nepodarilo načítať.",
-    "retry": "Skúsiť znova"
+    "retry": "Skúsiť znova",
+    "previous": "Predchádzajúce",
+    "next": "Ďalšie",
+    "pager": "Stránky",
+    "range": "{{from}}-{{to}} z {{total}}",
+    "openSource": "Otvoriť na zdroji",
+    "any": "Všetky",
+    "annoFrom": "Rok od",
+    "annoTo": "Rok do"
   },
   "corpus": {
-    "title": "Judikatúra"
+    "title": "Judikatúra",
+    "tablist": "Korpusy",
+    "tabs": {
+      "cc": "Ústavný súd",
+      "cass": "Kasačný súd",
+      "cgt": "Daňové súdy"
+    }
+  },
+  "cc": {
+    "search": "Hľadať v rozhodnutiach",
+    "searchPlaceholder": "napr. licenziamento illegittimo",
+    "tipologia": "Druh",
+    "kindS": "Nálezy",
+    "kindO": "Uznesenia",
+    "empty": "Žiadne rozhodnutia.",
+    "rangeHint": "Rozsah rokov sa zobrazí bez stránkovania (najviac 50 rozhodnutí podľa ECLI). Pre stránkovanie zvoľte jeden rok.",
+    "columns": {
+      "ecli": "ECLI",
+      "kind": "Druh",
+      "deposit": "Zverejnené",
+      "relatore": "Spravodajca",
+      "massime": "Právne vety"
+    },
+    "source": {
+      "massima": "právna veta",
+      "pronuncia": "rozhodnutie"
+    },
+    "massimaNo": "právna veta č. {{n}}"
+  },
+  "cass": {
+    "search": "Hľadať v rozsudkoch",
+    "searchPlaceholder": "napr. tributi",
+    "kind": "Odvetvie",
+    "kindCiv": "Občianske",
+    "kindPen": "Trestné",
+    "sezione": "Senát",
+    "materia": "Vec",
+    "empty": "Žiadne rozsudky.",
+    "notice": "Zobrazujú sa iba základné údaje, výťah a odkaz na oficiálny zdroj, nikdy nie úplný text.",
+    "columns": {
+      "ecli": "ECLI",
+      "sezione": "Senát",
+      "anno": "Rok",
+      "numDec": "Č.",
+      "date": "Rozhodnuté",
+      "materia": "Vec"
+    }
+  },
+  "cgt": {
+    "search": "Hľadať v rozhodnutiach",
+    "searchPlaceholder": "napr. accertamento",
+    "grado": "Stupeň",
+    "grado1": "Prvý stupeň",
+    "grado2": "Druhý stupeň",
+    "luogo": "Miesto",
+    "empty": "Žiadne rozhodnutia.",
+    "notice": "Zobrazujú sa iba základné údaje, výťah a odkaz na oficiálny zdroj, nikdy nie úplný text.",
+    "columns": {
+      "estremi": "Základné údaje",
+      "grado": "Stupeň",
+      "luogo": "Miesto",
+      "date": "Dátum"
+    }
   },
   "decision": {
     "title": "Rozhodnutie"

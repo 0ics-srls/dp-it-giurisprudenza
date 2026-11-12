@@ -2,10 +2,80 @@
   "common": {
     "loading": "Loading...",
     "error": "The data could not be loaded.",
-    "retry": "Try again"
+    "retry": "Try again",
+    "previous": "Previous",
+    "next": "Next",
+    "pager": "Pages",
+    "range": "{{from}}-{{to}} of {{total}}",
+    "openSource": "Open at the source",
+    "any": "Any",
+    "annoFrom": "Year from",
+    "annoTo": "Year to"
   },
   "corpus": {
-    "title": "Case law"
+    "title": "Case law",
+    "tablist": "Corpora",
+    "tabs": {
+      "cc": "Constitutional Court",
+      "cass": "Cassation",
+      "cgt": "Tax courts"
+    }
+  },
+  "cc": {
+    "search": "Search the decisions",
+    "searchPlaceholder": "e.g. licenziamento illegittimo",
+    "tipologia": "Kind",
+    "kindS": "Judgments",
+    "kindO": "Orders",
+    "empty": "No decisions found.",
+    "rangeHint": "A range of years is listed without paging (up to 50 decisions, ordered by ECLI). Use one year for paging.",
+    "columns": {
+      "ecli": "ECLI",
+      "kind": "Kind",
+      "deposit": "Deposited",
+      "relatore": "Rapporteur",
+      "massime": "Massime"
+    },
+    "source": {
+      "massima": "massima",
+      "pronuncia": "decision"
+    },
+    "massimaNo": "massima no. {{n}}"
+  },
+  "cass": {
+    "search": "Search the sentences",
+    "searchPlaceholder": "e.g. tributi",
+    "kind": "Branch",
+    "kindCiv": "Civil",
+    "kindPen": "Criminal",
+    "sezione": "Section",
+    "materia": "Subject",
+    "empty": "No sentences found.",
+    "notice": "Only the extremes, an excerpt and the link to the official source are shown, never the full text.",
+    "columns": {
+      "ecli": "ECLI",
+      "sezione": "Section",
+      "anno": "Year",
+      "numDec": "No.",
+      "date": "Decided",
+      "materia": "Subject"
+    }
+  },
+  "cgt": {
+    "search": "Search the decisions",
+    "searchPlaceholder": "e.g. accertamento",
+    "grado": "Instance",
+    "grado1": "First instance",
+    "grado2": "Second instance",
+    "luogo": "Place",
+    "empty": "No decisions found.",
+    "notice": "Only the extremes, an excerpt and the link to the official source are shown, never the full text.",
+    "columns": {
+      "estremi": "Extremes",
+      "grado": "Instance",
+      "luogo": "Place",
+      "date": "Date"
+    }
   },
   "decision": {
     "title": "Decision"
