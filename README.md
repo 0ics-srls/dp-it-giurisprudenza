@@ -38,7 +38,7 @@ Load the `norme_*` registries before the pronunce (or load the pronunce again): 
 | `it-giurisprudenza_guide` | the manual (Italian) | `CorpusGuide` |
 | `it-giurisprudenza_status` | live counts and limits per corpus | `lex://coverage` |
 
-A k above 50 is a 400 (k is 1..50); `mode` is hybrid, lexical or semantic. Without a query vector (no embedding capability) the hybrid search answers lexically. Results are in relevance order, with a `position`, and no numeric score.
+A k above 50 is a 400 (k is 1..50); `mode` is hybrid, lexical or semantic. Without a query vector (no embedding capability) the hybrid search answers lexically; a `mode=lexical` call does not embed the query at all (`x-embed.skipWhen`, since 0.2.4). Results are in relevance order, with a `position`, and no numeric score.
 
 ### Deviations from the legacy (notes P79-09, P79-10, P79-12)
 
